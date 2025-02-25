@@ -17,7 +17,14 @@
     </properties>
     
     <dependencies>
-        <!-- Dependencia para Servlets de javax -->
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>${jakartaee}</version>
+            <scope>provided</scope>
+        </dependency>
+        
+         <!-- Dependencia para Servlets de javax -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
