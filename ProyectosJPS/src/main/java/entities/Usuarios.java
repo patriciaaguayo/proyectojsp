@@ -36,73 +36,79 @@ public class Usuarios implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Id_Usuario")
-    private Integer idUsuario;
+    private Integer Id_Usuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "Nombre_Usuario")
-    private String nombreUsuario;
+    private String Nombre_Usuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "Password")
-    private String password;
+    private String Password;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "Tipo_Usuario")
-    private String tipoUsuario;
+    private String Tipo_Usuario;
 
     public Usuarios() {
     }
 
     public Usuarios(Integer idUsuario) {
-        this.idUsuario = idUsuario;
+        this.Id_Usuario = idUsuario;
     }
 
     public Usuarios(Integer idUsuario, String nombreUsuario, String password, String tipoUsuario) {
-        this.idUsuario = idUsuario;
-        this.nombreUsuario = nombreUsuario;
-        this.password = password;
-        this.tipoUsuario = tipoUsuario;
+        this.Id_Usuario = idUsuario;
+        this.Nombre_Usuario = nombreUsuario;
+        this.Password = password;
+        this.Tipo_Usuario = "User";
+    }
+    
+    public Usuarios(String nombreUsuario, String password, String tipoUsuario) {
+        this.Nombre_Usuario = nombreUsuario;
+        this.Password = password;
+        this.Tipo_Usuario = "User";
     }
 
     public Integer getIdUsuario() {
-        return idUsuario;
+        return Id_Usuario;
     }
 
     public void setIdUsuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
+        this.Id_Usuario = idUsuario;
     }
 
     public String getNombreUsuario() {
-        return nombreUsuario;
+        return Nombre_Usuario;
     }
 
     public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+        this.Nombre_Usuario = nombreUsuario;
     }
 
     public String getPassword() {
-        return password;
+        return Password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.Password = password;
     }
 
     public String getTipoUsuario() {
-        return tipoUsuario;
+        return Tipo_Usuario;
     }
 
     public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+        this.Tipo_Usuario = tipoUsuario;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
+        hash += (Id_Usuario != null ? Id_Usuario.hashCode() : 0);
         return hash;
     }
 
@@ -113,7 +119,7 @@ public class Usuarios implements Serializable {
             return false;
         }
         Usuarios other = (Usuarios) object;
-        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
+        if ((this.Id_Usuario == null && other.Id_Usuario != null) || (this.Id_Usuario != null && !this.Id_Usuario.equals(other.Id_Usuario))) {
             return false;
         }
         return true;
@@ -121,7 +127,7 @@ public class Usuarios implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Usuarios[ idUsuario=" + idUsuario + " ]";
+        return "entities.Usuarios[ idUsuario=" + Id_Usuario + " ]";
     }
     
 }

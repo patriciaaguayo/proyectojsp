@@ -5,6 +5,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -41,28 +42,36 @@ public class Proyectos implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Id_Proyecto")
-    private Integer idProyecto;
+    private Integer Id_Proyecto;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "Nombre_Proyecto")
-    private String nombreProyecto;
+    private String Nombre_Proyecto;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "Estado_Proyecto")
-    private String estadoProyecto;
+    private String Estado_Proyecto;
+    
+    @NotNull
     @Size(max = 300)
     @Column(name = "Descripcion_Proyecto")
-    private String descripcionProyecto;
+    private String Descripcion_Proyecto;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "Fecha_Inicio_Proyecto")
-    private String fechaInicioProyecto;
+    private LocalDate Fecha_Inicio_Proyecto;
+    
+    @NotNull
     @Size(max = 10)
     @Column(name = "Fecha_Fin_Proyecto")
-    private String fechaFinProyecto;
+    private LocalDate Fecha_Fin_Proyecto;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<Tareas> tareasCollection;
 
@@ -70,62 +79,72 @@ public class Proyectos implements Serializable {
     }
 
     public Proyectos(Integer idProyecto) {
-        this.idProyecto = idProyecto;
+        this.Id_Proyecto = idProyecto;
     }
 
-    public Proyectos(Integer idProyecto, String nombreProyecto, String estadoProyecto, String fechaInicioProyecto) {
-        this.idProyecto = idProyecto;
-        this.nombreProyecto = nombreProyecto;
-        this.estadoProyecto = estadoProyecto;
-        this.fechaInicioProyecto = fechaInicioProyecto;
+    public Proyectos(Integer idProyecto, String nombreProyecto, String estadoProyecto, LocalDate fechaFinProyecto) {
+        
+        this.Id_Proyecto = idProyecto;
+        this.Nombre_Proyecto = nombreProyecto;
+        this.Estado_Proyecto = "En curso";
+        this.Fecha_Inicio_Proyecto = LocalDate.now();
+        this.Fecha_Fin_Proyecto = fechaFinProyecto;
+    }
+    
+    public Proyectos(String nombreProyecto, String estadoProyecto, LocalDate fechaFinProyecto) {
+        
+        this.Nombre_Proyecto = nombreProyecto;
+        this.Estado_Proyecto = "En curso";
+        this.Fecha_Inicio_Proyecto = LocalDate.now();
+        this.Fecha_Fin_Proyecto = fechaFinProyecto;
     }
 
     public Integer getIdProyecto() {
-        return idProyecto;
+        return Id_Proyecto;
     }
 
     public void setIdProyecto(Integer idProyecto) {
-        this.idProyecto = idProyecto;
+        this.Id_Proyecto = idProyecto;
     }
 
     public String getNombreProyecto() {
-        return nombreProyecto;
+        return Nombre_Proyecto;
     }
 
     public void setNombreProyecto(String nombreProyecto) {
-        this.nombreProyecto = nombreProyecto;
+        this.Nombre_Proyecto = nombreProyecto;
     }
 
     public String getEstadoProyecto() {
-        return estadoProyecto;
+        return Estado_Proyecto;
     }
 
     public void setEstadoProyecto(String estadoProyecto) {
-        this.estadoProyecto = estadoProyecto;
+        this.Estado_Proyecto = estadoProyecto;
     }
 
     public String getDescripcionProyecto() {
-        return descripcionProyecto;
+        return Descripcion_Proyecto;
     }
 
     public void setDescripcionProyecto(String descripcionProyecto) {
-        this.descripcionProyecto = descripcionProyecto;
+        this.Descripcion_Proyecto = descripcionProyecto;
     }
 
-    public String getFechaInicioProyecto() {
-        return fechaInicioProyecto;
+    public LocalDate getFechaInicioProyecto() {
+        return Fecha_Inicio_Proyecto;
     }
 
-    public void setFechaInicioProyecto(String fechaInicioProyecto) {
-        this.fechaInicioProyecto = fechaInicioProyecto;
+    public void setFechaInicioProyecto(LocalDate fechaInicioProyecto) {
+        this.Fecha_Inicio_Proyecto = fechaInicioProyecto;
     }
 
-    public String getFechaFinProyecto() {
-        return fechaFinProyecto;
+    public LocalDate getFechaFinProyecto() {
+        return Fecha_Fin_Proyecto;
     }
 
-    public void setFechaFinProyecto(String fechaFinProyecto) {
-        this.fechaFinProyecto = fechaFinProyecto;
+    public void setFechaFinProyecto(LocalDate fechaFinProyecto) {
+        this.Fecha_Fin_Proyecto = fechaFinProyecto;
     }
 
     public Collection<Tareas> getTareasCollection() {
@@ -139,7 +158,7 @@ public class Proyectos implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idProyecto != null ? idProyecto.hashCode() : 0);
+        hash += (Id_Proyecto != null ? Id_Proyecto.hashCode() : 0);
         return hash;
     }
 
@@ -150,7 +169,7 @@ public class Proyectos implements Serializable {
             return false;
         }
         Proyectos other = (Proyectos) object;
-        if ((this.idProyecto == null && other.idProyecto != null) || (this.idProyecto != null && !this.idProyecto.equals(other.idProyecto))) {
+        if ((this.Id_Proyecto == null && other.Id_Proyecto != null) || (this.Id_Proyecto != null && !this.Id_Proyecto.equals(other.Id_Proyecto))) {
             return false;
         }
         return true;
@@ -158,7 +177,7 @@ public class Proyectos implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Proyectos[ idProyecto=" + idProyecto + " ]";
+        return "entities.Proyectos[ idProyecto=" + Id_Proyecto + " ]";
     }
     
 }

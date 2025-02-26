@@ -5,6 +5,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,106 +41,125 @@ public class Tareas implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Id_Tarea")
-    private Integer idTarea;
+    private Integer Id_Tarea;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 300)
     @Column(name = "Descripcion_Tarea")
-    private String descripcionTarea;
+    private String Descripcion_Tarea;
+    
+    @NotNull
     @Size(max = 36)
     @Column(name = "Responsable")
-    private String responsable;
+    private String Responsable;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "Estado_Tarea")
-    private String estadoTarea;
+    private String Estado_Tarea;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "Fecha_Inicio_Tarea")
-    private String fechaInicioTarea;
+    private LocalDate Fecha_Inicio_Tarea;
+    
+    @NotNull
     @Size(max = 10)
     @Column(name = "Fecha_Fin_Tarea")
-    private String fechaFinTarea;
+    private LocalDate Fecha_Fin_Tarea;
+    
+    @NotNull
     @JoinColumn(name = "Id_Proyecto", referencedColumnName = "Id_Proyecto")
     @ManyToOne(optional = false)
-    private Proyectos idProyecto;
+    private Proyectos Id_Proyecto;
 
     public Tareas() {
     }
 
     public Tareas(Integer idTarea) {
-        this.idTarea = idTarea;
+        this.Id_Tarea = idTarea;
     }
 
-    public Tareas(Integer idTarea, String descripcionTarea, String estadoTarea, String fechaInicioTarea) {
-        this.idTarea = idTarea;
-        this.descripcionTarea = descripcionTarea;
-        this.estadoTarea = estadoTarea;
-        this.fechaInicioTarea = fechaInicioTarea;
+    public Tareas(Integer idTarea, String descripcionTarea, String estadoTarea, LocalDate fechaFinTarea) {
+        
+        this.Id_Tarea = idTarea;
+        this.Descripcion_Tarea = descripcionTarea;
+        this.Estado_Tarea = "Pendiente";
+        this.Fecha_Inicio_Tarea = LocalDate.now();
+        this.Fecha_Fin_Tarea = fechaFinTarea;
+    }
+    
+    public Tareas(String descripcionTarea, String estadoTarea, LocalDate fechaFinTarea) {
+        
+        this.Descripcion_Tarea = descripcionTarea;
+        this.Estado_Tarea = "Pendiente";
+        this.Fecha_Inicio_Tarea = LocalDate.now();
+        this.Fecha_Fin_Tarea = fechaFinTarea;
     }
 
     public Integer getIdTarea() {
-        return idTarea;
+        return Id_Tarea;
     }
 
     public void setIdTarea(Integer idTarea) {
-        this.idTarea = idTarea;
+        this.Id_Tarea = idTarea;
     }
 
     public String getDescripcionTarea() {
-        return descripcionTarea;
+        return Descripcion_Tarea;
     }
 
     public void setDescripcionTarea(String descripcionTarea) {
-        this.descripcionTarea = descripcionTarea;
+        this.Descripcion_Tarea = descripcionTarea;
     }
 
     public String getResponsable() {
-        return responsable;
+        return Responsable;
     }
 
     public void setResponsable(String responsable) {
-        this.responsable = responsable;
+        this.Responsable = responsable;
     }
 
     public String getEstadoTarea() {
-        return estadoTarea;
+        return Estado_Tarea;
     }
 
     public void setEstadoTarea(String estadoTarea) {
-        this.estadoTarea = estadoTarea;
+        this.Estado_Tarea = estadoTarea;
     }
 
-    public String getFechaInicioTarea() {
-        return fechaInicioTarea;
+    public LocalDate getFechaInicioTarea() {
+        return Fecha_Inicio_Tarea;
     }
 
-    public void setFechaInicioTarea(String fechaInicioTarea) {
-        this.fechaInicioTarea = fechaInicioTarea;
+    public void setFechaInicioTarea(LocalDate fechaInicioTarea) {
+        this.Fecha_Inicio_Tarea = fechaInicioTarea;
     }
 
-    public String getFechaFinTarea() {
-        return fechaFinTarea;
+    public LocalDate getFechaFinTarea() {
+        return Fecha_Fin_Tarea;
     }
 
-    public void setFechaFinTarea(String fechaFinTarea) {
-        this.fechaFinTarea = fechaFinTarea;
+    public void setFechaFinTarea(LocalDate fechaFinTarea) {
+        this.Fecha_Fin_Tarea = fechaFinTarea;
     }
 
     public Proyectos getIdProyecto() {
-        return idProyecto;
+        return Id_Proyecto;
     }
 
     public void setIdProyecto(Proyectos idProyecto) {
-        this.idProyecto = idProyecto;
+        this.Id_Proyecto = idProyecto;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idTarea != null ? idTarea.hashCode() : 0);
+        hash += (Id_Tarea != null ? Id_Tarea.hashCode() : 0);
         return hash;
     }
 
@@ -150,7 +170,7 @@ public class Tareas implements Serializable {
             return false;
         }
         Tareas other = (Tareas) object;
-        if ((this.idTarea == null && other.idTarea != null) || (this.idTarea != null && !this.idTarea.equals(other.idTarea))) {
+        if ((this.Id_Tarea == null && other.Id_Tarea != null) || (this.Id_Tarea != null && !this.Id_Tarea.equals(other.Id_Tarea))) {
             return false;
         }
         return true;
@@ -158,7 +178,7 @@ public class Tareas implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Tareas[ idTarea=" + idTarea + " ]";
+        return "entities.Tareas[ idTarea=" + Id_Tarea + " ]";
     }
     
 }
