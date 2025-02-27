@@ -12,6 +12,7 @@
         <maven.compiler.target>1.8</maven.compiler.target> -->
          <maven.compiler.source>20</maven.compiler.source> <!-- Cambiar a Java 20 -->
         <maven.compiler.target>20</maven.compiler.target> 
+         <maven.compiler.release>20</maven.compiler.release>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
@@ -90,19 +91,13 @@
     
     <build>
     <plugins>
-        <!-- Actualizar el plugin de compilación de Maven -->
-        <plugin>
+         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.8.1</version> <!-- Versión más reciente -->
+            <version>3.8.1</version>
             <configuration>
-                <source>20</source> <!-- Establecer Java 20 -->
-                <target>20</target> <!-- Establecer Java 20 -->
-                <compilerArguments>
-                    <endorseddirs>${endorsed.dir}</endorseddirs>
-                    <!-- Agregar la opción add-opens -->
-                    <arg>--add-opens=java.base/java.util=ALL-UNNAMED</arg>
-                </compilerArguments>
+                <source>20</source> <!-- Cambia esto a tu versión de JDK -->
+                <target>20</target> <!-- Asegúrate que coincida con tu JDK -->
             </configuration>
         </plugin>
         

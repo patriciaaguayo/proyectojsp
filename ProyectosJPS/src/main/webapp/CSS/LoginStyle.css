@@ -63,7 +63,7 @@ button {
 }
 
 button:hover {
-    background-color: #2B3541;
+    background-color: #2B3541; /*FFD92D*/
 }
 
 /* Estilo para el mensaje de error */

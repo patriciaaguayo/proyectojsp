@@ -77,50 +77,37 @@ public class UsuarioServlet extends HttpServlet {
         String username = request.getParameter("nombreUsuario");
         String password = request.getParameter("password");
 
+        UsuarioService usuarioService = new UsuarioServiceImpl();
+
         if ("login".equals(action)) {
-            // Validar login
-            UsuarioService usuarioService = new UsuarioServiceImpl();
             Usuarios usuario = usuarioService.usuarioEncontrado(username);
 
             if (usuario != null) {
-                // Si el usuario existe, comprobar la contraseña
+                // Validar contraseña
                 if (usuario.getPassword().equals(password)) {
-                    // Contraseña correcta, redirigir a página de inicio o dashboard
-                    response.sendRedirect("Proyectos.jsp");
+                    response.sendRedirect("/JSP/Proyectos.jsp");
                 } else {
-                    // Contraseña incorrecta
-                    request.setAttribute("errorMessage", "La contraseña es incorrecta.");
+                    request.setAttribute("errorMessage", "Contraseña incorrecta.");
                     request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
                 }
             } else {
-                // El usuario no existe
                 request.setAttribute("errorMessage", "El usuario no existe.");
                 request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
             }
+
         } else if ("register".equals(action)) {
-            // Validar registro
-            UsuarioService usuarioService = new UsuarioServiceImpl();
             boolean usuarioExistente = usuarioService.validarUsuario(username);
 
             if (usuarioExistente) {
-                // Si el usuario ya existe
                 request.setAttribute("errorMessage", "El usuario ya existe.");
                 request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
             } else {
-                // Registrar nuevo usuario
-                String confirmPassword = request.getParameter("confirmPassword");
-
-                if (password.equals(confirmPassword)) {
-                    // Registrar usuario
+                if (password != null && !password.trim().isEmpty()) {
                     Usuarios nuevoUsuario = new Usuarios(username, password);
                     usuarioService.registrarUsuario(nuevoUsuario);
-
-                    // Redirigir a la página de login con mensaje de éxito
-                    request.setAttribute("successMessage", "Usuario registrado correctamente. Puedes iniciar sesión.");
-                    request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
+                    response.sendRedirect("/JSP/Proyectos.jsp");
                 } else {
-                    // Las contraseñas no coinciden
-                    request.setAttribute("errorMessage", "Las contraseñas no coinciden.");
+                    request.setAttribute("errorMessage", "La contraseña no puede estar vacía.");
                     request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
                 }
             }

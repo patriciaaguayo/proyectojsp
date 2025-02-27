@@ -24,7 +24,7 @@
     <!-- Mapeo de la URL del servlet -->
     <servlet-mapping>
         <servlet-name>UsuarioServlet</servlet-name>
-        <url-pattern>/LoginRegistroServlet</url-pattern>
+        <url-pattern>/UsuarioServlet</url-pattern>
     </servlet-mapping>
 
 </web-app>

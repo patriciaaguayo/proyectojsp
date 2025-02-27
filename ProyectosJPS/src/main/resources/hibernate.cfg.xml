@@ -11,10 +11,10 @@
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.hbm2ddl.auto">create</property>
-        <mapping class="com.mycompany.jsphibernate.Usuario"/>
-        <mapping class="com.mycompany.jsphibernate.Proyecto"/>
-        <mapping class="com.mycompany.jsphibernate.Tarea"/>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <mapping class="entities.Usuarios"/>
+        <mapping class="entities.Proyectos"/>
+        <mapping class="entities.Tareas"/>
 
     </session-factory>
 </hibernate-configuration>
