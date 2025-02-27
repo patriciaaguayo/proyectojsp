@@ -60,14 +60,14 @@ public class Usuarios implements Serializable {
         this.Id_Usuario = idUsuario;
     }
 
-    public Usuarios(Integer idUsuario, String nombreUsuario, String password, String tipoUsuario) {
+    public Usuarios(Integer idUsuario, String nombreUsuario, String password) {
         this.Id_Usuario = idUsuario;
         this.Nombre_Usuario = nombreUsuario;
         this.Password = password;
         this.Tipo_Usuario = "User";
     }
     
-    public Usuarios(String nombreUsuario, String password, String tipoUsuario) {
+    public Usuarios(String nombreUsuario, String password) {
         this.Nombre_Usuario = nombreUsuario;
         this.Password = password;
         this.Tipo_Usuario = "User";

@@ -4,6 +4,9 @@
  */
 package Servlets;
 
+import Service.UsuarioService;
+import Service.UsuarioServiceImpl;
+import entities.Usuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -69,9 +72,59 @@ public class UsuarioServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        String username = request.getParameter("nombreUsuario");
+        String password = request.getParameter("password");
+
+        if ("login".equals(action)) {
+            // Validar login
+            UsuarioService usuarioService = new UsuarioServiceImpl();
+            Usuarios usuario = usuarioService.usuarioEncontrado(username);
+
+            if (usuario != null) {
+                // Si el usuario existe, comprobar la contraseña
+                if (usuario.getPassword().equals(password)) {
+                    // Contraseña correcta, redirigir a página de inicio o dashboard
+                    response.sendRedirect("Proyectos.jsp");
+                } else {
+                    // Contraseña incorrecta
+                    request.setAttribute("errorMessage", "La contraseña es incorrecta.");
+                    request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
+                }
+            } else {
+                // El usuario no existe
+                request.setAttribute("errorMessage", "El usuario no existe.");
+                request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
+            }
+        } else if ("register".equals(action)) {
+            // Validar registro
+            UsuarioService usuarioService = new UsuarioServiceImpl();
+            boolean usuarioExistente = usuarioService.validarUsuario(username);
+
+            if (usuarioExistente) {
+                // Si el usuario ya existe
+                request.setAttribute("errorMessage", "El usuario ya existe.");
+                request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
+            } else {
+                // Registrar nuevo usuario
+                String confirmPassword = request.getParameter("confirmPassword");
+
+                if (password.equals(confirmPassword)) {
+                    // Registrar usuario
+                    Usuarios nuevoUsuario = new Usuarios(username, password);
+                    usuarioService.registrarUsuario(nuevoUsuario);
+
+                    // Redirigir a la página de login con mensaje de éxito
+                    request.setAttribute("successMessage", "Usuario registrado correctamente. Puedes iniciar sesión.");
+                    request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
+                } else {
+                    // Las contraseñas no coinciden
+                    request.setAttribute("errorMessage", "Las contraseñas no coinciden.");
+                    request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
+                }
+            }
+        }
     }
 
     /**

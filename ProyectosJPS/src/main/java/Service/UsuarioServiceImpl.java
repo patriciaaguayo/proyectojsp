@@ -13,12 +13,17 @@ public class UsuarioServiceImpl implements UsuarioService {
     private IUsuariosDAO usuarioDAO = new UsuariosDAOImpl();
 
     @Override
-    public boolean validarUsuario(String nombreUsuario, String password) {
-        return usuarioDAO.existeUsuario(nombreUsuario, password);
+    public boolean validarUsuario(String nombreUsuario) {
+        return usuarioDAO.existeUsuario(nombreUsuario);
     }
 
     @Override
     public void registrarUsuario(Usuarios usuario) {
         usuarioDAO.registrarUsuario(usuario);
+    }
+
+    @Override
+    public Usuarios usuarioEncontrado(String nombreUsuario) {
+        return usuarioDAO.usuarioEncontrado(nombreUsuario);
     }
 }

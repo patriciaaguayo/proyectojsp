@@ -1,0 +1,83 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #030405;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Contenedor principal centrado */
+.container {
+    background-color: #111924;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+/* Título */
+h2 {
+    text-align: center;
+    color: white;
+}
+
+h3{
+    color: white;
+    padding-top: 10px;
+}
+
+#BotonIniciar{
+    margin-bottom: 10px;
+}
+
+#BotonRegistro{
+    
+}
+
+/* Formulario */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"], input[type="password"] {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px;
+    background-color: #647081;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #2B3541;
+}
+
+/* Estilo para el mensaje de error */
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}

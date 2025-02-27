@@ -8,8 +8,10 @@
     <name>ProyectosJPS-1.0-SNAPSHOT</name>
     
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target> -->
+         <maven.compiler.source>20</maven.compiler.source> <!-- Cambiar a Java 20 -->
+        <maven.compiler.target>20</maven.compiler.target> 
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
@@ -86,53 +88,60 @@
         </dependency>
     </dependencies>
     
-     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <compilerArguments>
-                        <endorseddirs>${endorsed.dir}</endorseddirs>
-                    </compilerArguments>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.3</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.6</version>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${endorsed.dir}</outputDirectory>
-                            <silent>true</silent>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>jakarta.platform</groupId>
-                                    <artifactId>jakarta.jakartaee-api</artifactId>
-                                    <version>${jakartaee}</version>
-                                    <type>jar</type>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <build>
+    <plugins>
+        <!-- Actualizar el plugin de compilación de Maven -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version> <!-- Versión más reciente -->
+            <configuration>
+                <source>20</source> <!-- Establecer Java 20 -->
+                <target>20</target> <!-- Establecer Java 20 -->
+                <compilerArguments>
+                    <endorseddirs>${endorsed.dir}</endorseddirs>
+                    <!-- Agregar la opción add-opens -->
+                    <arg>--add-opens=java.base/java.util=ALL-UNNAMED</arg>
+                </compilerArguments>
+            </configuration>
+        </plugin>
+        
+        <!-- Plugin para generar el archivo WAR -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.3.1</version>
+            <configuration>
+                <failOnMissingWebXml>false</failOnMissingWebXml>
+            </configuration>
+        </plugin>
+        
+        <!-- Plugin para la copia de dependencias -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>2.6</version>
+            <executions>
+                <execution>
+                    <phase>validate</phase>
+                    <goals>
+                        <goal>copy</goal>
+                    </goals>
+                    <configuration>
+                        <outputDirectory>${endorsed.dir}</outputDirectory>
+                        <silent>true</silent>
+                        <artifactItems>
+                            <artifactItem>
+                                <groupId>jakarta.platform</groupId>
+                                <artifactId>jakarta.jakartaee-api</artifactId>
+                                <version>${jakartaee}</version>
+                                <type>jar</type>
+                            </artifactItem>
+                        </artifactItems>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
 </project>

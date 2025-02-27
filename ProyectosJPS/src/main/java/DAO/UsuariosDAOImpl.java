@@ -43,22 +43,20 @@ public class UsuariosDAOImpl implements IUsuariosDAO {
      * Método booleano para verificar la existencia de un usuario por nombre y contraseña.
      *
      * @param nombreUsuario El nombre del usuario.
-     * @param password La contraseña del usuario.
      * @return true si el usuario existe, false en caso contrario.
      */
     
     @Override
-    public boolean existeUsuario(String nombreUsuario, String password) {
+    public boolean existeUsuario(String nombreUsuario) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // Consulta SQL nativa
-            String sql = "SELECT * FROM Usuarios WHERE Nombre_Usuario = :nombreUsuario AND Password = :password";
+            String sql = "SELECT * FROM Usuarios WHERE Nombre_Usuario = :nombreUsuario";
 
             // Crear la consulta nativa
             Query query = session.createNativeQuery(sql, Usuarios.class);
 
             // Asignar parámetros
             query.setParameter("nombreUsuario", nombreUsuario);
-            query.setParameter("password", password);
 
             // Comprobar si hay resultados
             return !query.getResultList().isEmpty();
@@ -68,4 +66,23 @@ public class UsuariosDAOImpl implements IUsuariosDAO {
             return false;
         }
     }
+    
+    /**
+     * Busca un usuario por su nombre de usuario.
+     * 
+     * @param nombreUsuario El nombre del usuario.
+     * @return El objeto Usuario si se encuentra, de lo contrario retorna null.
+     */
+    
+    @Override
+    public Usuarios usuarioEncontrado(String nombreUsuario) {
+    try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        // Realizamos la consulta HQL correctamente
+        return session.createQuery("FROM Usuarios WHERE nombreUsuario = :nombreUsuario", Usuarios.class)
+                .setParameter("nombreUsuario", nombreUsuario) // Pasamos el parámetro
+                .uniqueResult(); // Usamos uniqueResult() para obtener un solo resultado
+    } catch (Exception e) {
+        throw new RuntimeException("Error al buscar el usuario en la base de datos", e);
+    }
+}
 }

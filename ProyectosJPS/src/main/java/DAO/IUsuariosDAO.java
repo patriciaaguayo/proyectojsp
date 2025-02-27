@@ -24,9 +24,16 @@ public interface IUsuariosDAO {
      * Método booleano para verificar la existencia de un usuario por nombre y contraseña.
      *
      * @param nombreUsuario El nombre del usuario.
-     * @param password La contraseña del usuario.
      * @return true si el usuario existe, false en caso contrario.
      */
-    public boolean existeUsuario(String nombreUsuario, String password);
+    public boolean existeUsuario(String nombreUsuario);
+    
+    
+    /**
+     * 
+     * @param nombreUsuario EL nombre del usuario
+     * @return devuelve el usuario
+     */
+    public Usuarios usuarioEncontrado(String nombreUsuario);
     
 }

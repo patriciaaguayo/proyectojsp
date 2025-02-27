@@ -12,35 +12,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login o Registro</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <!-- Referencia a la hoja de estilos externa -->
+    <link rel="stylesheet" href="CSS/LoginStyle.css">
+
+    <script type="text/javascript">
+        // Mostrar mensaje de error o éxito como alerta emergente al cargar la página
+        window.onload = function() {
+            var errorMessage = "<c:out value='${errorMessage}' />";
+            var successMessage = "<c:out value='${successMessage}' />";
+
+            // Mostrar mensaje de error si existe
+            if (errorMessage) {
+                alert(errorMessage);
+            }
+
+            // Mostrar mensaje de éxito si existe
+            if (successMessage) {
+                alert(successMessage);
+            }
+        };
+    </script>
 </head>
 <body>
 
-    <h2>Login o Registro</h2>
+    <div class="container">
+        <h2>Iniciar sesión o Registro</h2>
 
-    <!-- Muestra un mensaje si hubo un error en el login o el registro -->
-    <c:if test="${not empty errorMessage}">
-        <div class="error">${errorMessage}</div>
-    </c:if>
+        <!-- Formulario de Login -->
+        <h3>Iniciar sesión</h3>
+        <form action="LoginRegistroServlet" method="post">
+            <input type="text" name="nombreUsuario" placeholder="Nombre de usuario" required><br>
+            <input type="password" name="password" placeholder="Contraseña" required><br>
+            <button type="submit" name="action" value="login" id="BotonIniciar">Iniciar sesión</button>
+        </form>
 
-    <!-- Formulario de Login -->
-    <h3>Iniciar sesión</h3>
-    <form action="LoginRegistroServlet" method="post">
-        <input type="text" name="nombreUsuario" placeholder="Nombre de usuario" required><br>
-        <input type="password" name="password" placeholder="Contraseña" required><br>
-        <button type="submit" name="action" value="login">Iniciar sesión</button>
-    </form>
+        <hr>
 
-    <hr>
-
-    <!-- Formulario de Registro -->
-    <h3>¿No tienes cuenta? Regístrate</h3>
-    <form action="LoginRegistroServlet" method="post">
-        <input type="text" name="nombreUsuario" placeholder="Nombre de usuario" required><br>
-        <input type="password" name="password" placeholder="Contraseña" required><br>
-        <input type="password" name="confirmPassword" placeholder="Confirmar contraseña" required><br>
-        <button type="submit" name="action" value="register">Registrarse</button>
-    </form>
+        <!-- Formulario de Registro -->
+        <h3>¿No tienes cuenta? Regístrate</h3>
+        <form action="LoginRegistroServlet" method="post">
+            <input type="text" name="nombreUsuario" placeholder="Nombre de usuario" required><br>
+            <input type="password" name="password" placeholder="Contraseña" required><br>
+            <button type="submit" name="action" value="register">Registrarse</button>
+        </form>
+    </div>
 
 </body>
 </html>
+

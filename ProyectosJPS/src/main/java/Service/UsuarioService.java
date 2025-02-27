@@ -4,10 +4,14 @@
  */
 package Service;
 
+import entities.Usuarios;
+
 /**
  *
  * @author Patricia Aguayo
  */
 public interface UsuarioService {
-    
+    boolean validarUsuario(String nombreUsuario);
+    void registrarUsuario(Usuarios usuario);
+    Usuarios usuarioEncontrado(String nombreUsuario);
 }
