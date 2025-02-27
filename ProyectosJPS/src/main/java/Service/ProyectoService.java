@@ -2,16 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package DAO;
+package Service;
 
 import entities.Proyectos;
 import java.util.List;
 
 /**
  *
- * @author Patricia Aguayo
+ * @author patriciaaguayo
  */
-public interface IProyectosDAO {
+public interface ProyectoService {
     
-    List<Proyectos> obtenerProyectos();
+    public List<Proyectos> obtenerProyectos();
 }
