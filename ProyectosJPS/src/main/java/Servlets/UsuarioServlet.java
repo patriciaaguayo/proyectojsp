@@ -85,13 +85,20 @@ public class UsuarioServlet extends HttpServlet {
             if (usuario != null) {
                 // Validar contraseña
                 if (usuario.getPassword().equals(password)) {
-                    response.sendRedirect("/JSP/Proyectos.jsp");
+                    // Mensaje de éxito
+                    request.setAttribute("successMessage", "Login exitoso.");
+                    // Redirigir a la página Proyectos.jsp
+                    request.getRequestDispatcher("/JSP/Proyectos.jsp").forward(request, response);
                 } else {
+                    // Error de contraseña
                     request.setAttribute("errorMessage", "Contraseña incorrecta.");
+                    // Redirigir de nuevo a LoginRegistro.jsp con el mensaje de error
                     request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
                 }
             } else {
+                // Error: el usuario no existe
                 request.setAttribute("errorMessage", "El usuario no existe.");
+                // Redirigir de nuevo a LoginRegistro.jsp con el mensaje de error
                 request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
             }
 
@@ -99,15 +106,23 @@ public class UsuarioServlet extends HttpServlet {
             boolean usuarioExistente = usuarioService.validarUsuario(username);
 
             if (usuarioExistente) {
+                // El usuario ya existe
                 request.setAttribute("errorMessage", "El usuario ya existe.");
+                // Redirigir de nuevo a LoginRegistro.jsp con el mensaje de error
                 request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
             } else {
                 if (password != null && !password.trim().isEmpty()) {
+                    // Registrar nuevo usuario
                     Usuarios nuevoUsuario = new Usuarios(username, password);
                     usuarioService.registrarUsuario(nuevoUsuario);
-                    response.sendRedirect("/JSP/Proyectos.jsp");
+                    // Mensaje de éxito
+                    request.setAttribute("successMessage", "Registro exitoso.");
+                    // Redirigir a la página Proyectos.jsp
+                    request.getRequestDispatcher("/JSP/Proyectos.jsp").forward(request, response);
                 } else {
+                    // Error: contraseña vacía
                     request.setAttribute("errorMessage", "La contraseña no puede estar vacía.");
+                    // Redirigir de nuevo a LoginRegistro.jsp con el mensaje de error
                     request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
                 }
             }

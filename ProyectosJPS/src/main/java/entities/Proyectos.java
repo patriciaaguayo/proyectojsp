@@ -29,12 +29,12 @@ import javax.validation.constraints.Size;
 @Table(name = "proyectos")
 @NamedQueries({
     @NamedQuery(name = "Proyectos.findAll", query = "SELECT p FROM Proyectos p"),
-    @NamedQuery(name = "Proyectos.findByIdProyecto", query = "SELECT p FROM Proyectos p WHERE p.idProyecto = :idProyecto"),
-    @NamedQuery(name = "Proyectos.findByNombreProyecto", query = "SELECT p FROM Proyectos p WHERE p.nombreProyecto = :nombreProyecto"),
-    @NamedQuery(name = "Proyectos.findByEstadoProyecto", query = "SELECT p FROM Proyectos p WHERE p.estadoProyecto = :estadoProyecto"),
-    @NamedQuery(name = "Proyectos.findByDescripcionProyecto", query = "SELECT p FROM Proyectos p WHERE p.descripcionProyecto = :descripcionProyecto"),
-    @NamedQuery(name = "Proyectos.findByFechaInicioProyecto", query = "SELECT p FROM Proyectos p WHERE p.fechaInicioProyecto = :fechaInicioProyecto"),
-    @NamedQuery(name = "Proyectos.findByFechaFinProyecto", query = "SELECT p FROM Proyectos p WHERE p.fechaFinProyecto = :fechaFinProyecto")})
+    @NamedQuery(name = "Proyectos.findByIdProyecto", query = "SELECT p FROM Proyectos p WHERE p.Id_Proyecto = :Id_Proyecto"),
+    @NamedQuery(name = "Proyectos.findByNombreProyecto", query = "SELECT p FROM Proyectos p WHERE p.Nombre_Proyecto = :Nombre_Proyecto"),
+    @NamedQuery(name = "Proyectos.findByEstadoProyecto", query = "SELECT p FROM Proyectos p WHERE p.Estado_Proyecto = :Estado_Proyecto"),
+    @NamedQuery(name = "Proyectos.findByDescripcionProyecto", query = "SELECT p FROM Proyectos p WHERE p.Descripcion_Proyecto = :Descripcion_Proyecto"),
+    @NamedQuery(name = "Proyectos.findByFechaInicioProyecto", query = "SELECT p FROM Proyectos p WHERE p.Fecha_Inicio_Proyecto = :Fecha_Inicio_Proyecto"),
+    @NamedQuery(name = "Proyectos.findByFechaFinProyecto", query = "SELECT p FROM Proyectos p WHERE p.Fecha_Fin_Proyecto = :Fecha_Fin_Proyecto")})
 public class Proyectos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -72,7 +72,7 @@ public class Proyectos implements Serializable {
     @Column(name = "Fecha_Fin_Proyecto")
     private LocalDate Fecha_Fin_Proyecto;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Id_Proyecto")
     private Collection<Tareas> tareasCollection;
 
     public Proyectos() {

@@ -28,12 +28,12 @@ import javax.validation.constraints.Size;
 @Table(name = "tareas")
 @NamedQueries({
     @NamedQuery(name = "Tareas.findAll", query = "SELECT t FROM Tareas t"),
-    @NamedQuery(name = "Tareas.findByIdTarea", query = "SELECT t FROM Tareas t WHERE t.idTarea = :idTarea"),
-    @NamedQuery(name = "Tareas.findByDescripcionTarea", query = "SELECT t FROM Tareas t WHERE t.descripcionTarea = :descripcionTarea"),
-    @NamedQuery(name = "Tareas.findByResponsable", query = "SELECT t FROM Tareas t WHERE t.responsable = :responsable"),
-    @NamedQuery(name = "Tareas.findByEstadoTarea", query = "SELECT t FROM Tareas t WHERE t.estadoTarea = :estadoTarea"),
-    @NamedQuery(name = "Tareas.findByFechaInicioTarea", query = "SELECT t FROM Tareas t WHERE t.fechaInicioTarea = :fechaInicioTarea"),
-    @NamedQuery(name = "Tareas.findByFechaFinTarea", query = "SELECT t FROM Tareas t WHERE t.fechaFinTarea = :fechaFinTarea")})
+    @NamedQuery(name = "Tareas.findByIdTarea", query = "SELECT t FROM Tareas t WHERE t.Id_Tarea = :Id_Tarea"),
+    @NamedQuery(name = "Tareas.findByDescripcionTarea", query = "SELECT t FROM Tareas t WHERE t.Descripcion_Tarea = :Descripcion_Tarea"),
+    @NamedQuery(name = "Tareas.findByResponsable", query = "SELECT t FROM Tareas t WHERE t.Responsable = :Responsable"),
+    @NamedQuery(name = "Tareas.findByEstadoTarea", query = "SELECT t FROM Tareas t WHERE t.Estado_Tarea = :Estado_Tarea"),
+    @NamedQuery(name = "Tareas.findByFechaInicioTarea", query = "SELECT t FROM Tareas t WHERE t.Fecha_Inicio_Tarea = :Fecha_Inicio_Tarea"),
+    @NamedQuery(name = "Tareas.findByFechaFinTarea", query = "SELECT t FROM Tareas t WHERE t.Fecha_Fin_Tarea = :Fecha_Fin_Tarea")})
 public class Tareas implements Serializable {
 
     private static final long serialVersionUID = 1L;

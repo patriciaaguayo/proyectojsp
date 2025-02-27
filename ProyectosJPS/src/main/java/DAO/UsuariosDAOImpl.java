@@ -78,9 +78,9 @@ public class UsuariosDAOImpl implements IUsuariosDAO {
     public Usuarios usuarioEncontrado(String nombreUsuario) {
     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
         // Realizamos la consulta HQL correctamente
-        return session.createQuery("FROM Usuarios WHERE nombreUsuario = :nombreUsuario", Usuarios.class)
-                .setParameter("nombreUsuario", nombreUsuario) // Pasamos el parámetro
-                .uniqueResult(); // Usamos uniqueResult() para obtener un solo resultado
+        return session.createQuery("FROM Usuarios WHERE Nombre_Usuario = :nombreUsuario", Usuarios.class)
+              .setParameter("nombreUsuario", nombreUsuario) // Pasamos el parámetro
+              .uniqueResult();
     } catch (Exception e) {
         throw new RuntimeException("Error al buscar el usuario en la base de datos", e);
     }

@@ -2,6 +2,8 @@
 create database jsphibernate;
 use jsphibernate;
 
+drop database jsphibernate;
+
 CREATE TABLE Usuarios (
     Id_Usuario INT auto_increment primary key,
     Nombre_Usuario VARCHAR(100) NOT NULL,
@@ -17,8 +19,8 @@ CREATE TABLE Proyectos (
     Nombre_Proyecto VARCHAR(255) NOT NULL,
     Estado_Proyecto VARCHAR(50) NOT NULL,
     Descripcion_Proyecto VARCHAR (300),
-    Fecha_Inicio_Proyecto VARCHAR(10) NOT NULL,
-    Fecha_Fin_Proyecto VARCHAR(10)
+    Fecha_Inicio_Proyecto DATE NOT NULL,
+    Fecha_Fin_Proyecto DATE NOT NULL
 );
 
 drop table Proyectos;
@@ -30,8 +32,8 @@ CREATE TABLE Tareas (
     Id_Proyecto INT NOT NULL,
     Responsable VARCHAR(36),
     Estado_Tarea VARCHAR(50) NOT NULL,
-    Fecha_Inicio_Tarea VARCHAR(10) NOT NULL,
-    Fecha_Fin_Tarea VARCHAR(10),
+    Fecha_Inicio_Tarea DATE NOT NULL,
+    Fecha_Fin_Tarea DATE,
 	FOREIGN KEY (Id_Proyecto) REFERENCES Proyectos(Id_Proyecto) ON DELETE CASCADE
 );
 
@@ -39,9 +41,9 @@ drop table Tareas;
 
 -- Inserciones en la tabla Usuarios
 INSERT INTO Usuarios (Nombre_Usuario, Password, Tipo_Usuario) VALUES
-('admin', 'admin', 'admin'),
-('usuario1', 'userpass1', 'user'),
-('usuario2', 'userpass2', 'user');
+('admin', 'admin', 'Admin'),
+('usuario1', 'pass1', 'User'),
+('usuario2', 'pass2', 'User');
 
 -- Inserciones en la tabla Proyectos
 INSERT INTO Proyectos (Nombre_Proyecto, Estado_Proyecto, Descripcion_Proyecto, Fecha_Inicio_Proyecto, Fecha_Fin_Proyecto) VALUES

@@ -20,11 +20,11 @@
             var successMessage = "<c:out value='${successMessage}' />";
 
             if (errorMessage) {
-                alert(errorMessage);
+                alert(errorMessage); // Mostrar error en ventana emergente
             }
 
             if (successMessage) {
-                alert(successMessage);
+                alert(successMessage); // Mostrar mensaje de éxito en ventana emergente
             }
         };
     </script>

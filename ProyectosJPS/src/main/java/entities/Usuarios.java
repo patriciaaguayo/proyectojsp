@@ -25,10 +25,10 @@ import javax.validation.constraints.Size;
 @Table(name = "usuarios")
 @NamedQueries({
     @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
-    @NamedQuery(name = "Usuarios.findByIdUsuario", query = "SELECT u FROM Usuarios u WHERE u.idUsuario = :idUsuario"),
-    @NamedQuery(name = "Usuarios.findByNombreUsuario", query = "SELECT u FROM Usuarios u WHERE u.nombreUsuario = :nombreUsuario"),
-    @NamedQuery(name = "Usuarios.findByPassword", query = "SELECT u FROM Usuarios u WHERE u.password = :password"),
-    @NamedQuery(name = "Usuarios.findByTipoUsuario", query = "SELECT u FROM Usuarios u WHERE u.tipoUsuario = :tipoUsuario")})
+    @NamedQuery(name = "Usuarios.findByIdUsuario", query = "SELECT u FROM Usuarios u WHERE u.Id_Usuario = :Id_Usuario"),
+    @NamedQuery(name = "Usuarios.findByNombreUsuario", query = "SELECT u FROM Usuarios u WHERE u.Nombre_Usuario = :Nombre_Usuario"),
+    @NamedQuery(name = "Usuarios.findByPassword", query = "SELECT u FROM Usuarios u WHERE u.Password = :Password"),
+    @NamedQuery(name = "Usuarios.findByTipoUsuario", query = "SELECT u FROM Usuarios u WHERE u.Tipo_Usuario = :Tipo_Usuario")})
 public class Usuarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,16 +37,19 @@ public class Usuarios implements Serializable {
     @Basic(optional = false)
     @Column(name = "Id_Usuario")
     private Integer Id_Usuario;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "Nombre_Usuario")
     private String Nombre_Usuario;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "Password")
     private String Password;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
