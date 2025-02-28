@@ -11,6 +11,7 @@ import Util.HibernateUtil;
 import entities.Proyectos;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +28,7 @@ import org.hibernate.SessionFactory;
 public class ProyectoServlet extends HttpServlet {
     
     private ProyectoServiceImpl proyectoService;
-    
+
     @Override
     public void init() throws ServletException {
         // Inicializar ProyectoService
@@ -73,17 +74,18 @@ public class ProyectoServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Obtener los proyectos
-        ProyectoServiceImpl proyectoService = new ProyectoServiceImpl();
-        List<Proyectos> proyectos = proyectoService.obtenerProyectos();
+        String estadoProyecto = request.getParameter("estado"); // Obtener el estado filtrado
 
-        // Verificar si hay proyectos
-        if (proyectos != null && !proyectos.isEmpty()) {
-            request.setAttribute("proyectos", proyectos);
+        List<Proyectos> proyectos;
+        
+        if (estadoProyecto != null && !estadoProyecto.isEmpty()) {
+            proyectos = proyectoService.buscarPorEstado(estadoProyecto); // Filtrar por estado
         } else {
-            // Si no hay proyectos, añadir un mensaje
-            request.setAttribute("mensaje", "No hay proyectos disponibles");
+            proyectos = proyectoService.obtenerProyectos(); // Obtener todos los proyectos
         }
+
+        // Establecer los proyectos en el request
+        request.setAttribute("proyectos", proyectos);
 
         // Redirigir a la JSP
         request.getRequestDispatcher("/JSP/Proyectos.jsp").forward(request, response);
@@ -99,9 +101,30 @@ public class ProyectoServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String nombreProyecto = request.getParameter("nombreProyecto");
+        String descripcionProyecto = request.getParameter("descripcionProyecto");
+        String fechaFin = request.getParameter("fechaFin");
+        String idProyecto = request.getParameter("idProyecto");
+
+        // Si se está añadiendo un nuevo proyecto
+        if (nombreProyecto != null && descripcionProyecto != null) {
+            Proyectos nuevoProyecto = new Proyectos();
+            nuevoProyecto.setNombre_Proyecto(nombreProyecto);
+            nuevoProyecto.setDescripcion_Proyecto(descripcionProyecto);
+            nuevoProyecto.setFecha_Fin_Proyecto(LocalDate.parse(fechaFin));
+
+            proyectoService.insertarProyecto(nuevoProyecto);
+        }
+
+        // Si se está eliminando un proyecto
+        if (idProyecto != null && !idProyecto.isEmpty()) {
+            Integer id = Integer.parseInt(idProyecto);
+            proyectoService.eliminarProyectoPorId(id);
+        }
+
+        // Redirigir después de la acción
+        response.sendRedirect("ProyectoServlet");
     }
 
     /**

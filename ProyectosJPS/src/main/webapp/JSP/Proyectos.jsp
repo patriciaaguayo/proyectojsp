@@ -87,33 +87,41 @@
                 var section = document.getElementById(id);
                 section.style.display = (section.style.display === 'block') ? 'none' : 'block';
             }
+
+            function filtrarProyectos() {
+                var estado = document.getElementById("estadoFiltro").value;
+                window.location.href = "ProyectoServlet?estado=" + estado; // Enviar el estado para filtrar
+            }
         </script>
     </head>
     <body>
         <div class="container">
             <h1>Proyectos</h1>
             <label>Estado:</label>
-            <select id="estadoFiltro">
+            <select id="estadoFiltro" onchange="filtrarProyectos()">
                 <option value="">Todos</option>
                 <option value="Pendiente">Pendiente</option>
                 <option value="En progreso">En progreso</option>
                 <option value="Completado">Completado</option>
             </select>
-            <button class="btn">Buscar</button>
-            
+
             <div class="section" onclick="toggleSection('addSection')">Añadir ▼</div>
             <div class="section-content" id="addSection">
-                <label>Nombre:</label> <input type="text">
-                <label>Descripción:</label> <input type="text">
-                <label>Finalización:</label> <input type="date">
-                <button class="btn">Añadir</button>
+                <form action="/ProyectosJPS/ProyectoServlet" method="POST">
+                    <label>Nombre:</label> <input type="text" name="nombreProyecto" required>
+                    <label>Descripción:</label> <input type="text" name="descripcionProyecto" required>
+                    <label>Finalización:</label> <input type="date" name="fechaFin" required>
+                    <button type="submit" class="btn">Añadir</button>
+                </form>
             </div>
             
             <% if ("Admin".equals(tipoUsuario)) { %>
                 <div class="section" onclick="toggleSection('deleteSection')">Eliminar ▼</div>
                 <div class="section-content" id="deleteSection">
-                    <label>ID:</label> <input type="number">
-                    <button class="btn">Eliminar</button>
+                    <form action="/ProyectosJPS/ProyectoServlet" method="POST">
+                        <label>ID:</label> <input type="number" name="idProyecto" required>
+                        <button type="submit" class="btn">Eliminar</button>
+                    </form>
                 </div>
             <% } %>
             
@@ -128,12 +136,12 @@
                 </tr>
                 <c:forEach var="proyecto" items="${proyectos}">
                     <tr>
-                        <td>${proyecto.idProyecto}</td>
-                        <td><a href="Tareas.jsp?id=${proyecto.idProyecto}" style="color: white;">${proyecto.nombreProyecto}</a></td>
-                        <td>${proyecto.descripcionProyecto}</td>
-                        <td>${proyecto.estado}</td>
-                        <td>${proyecto.fechaInicio}</td>
-                        <td>${proyecto.fechaFin}</td>
+                        <td>${proyecto.Id_Proyecto}</td>
+                        <td><a href="Tareas.jsp?id=${proyecto.Id_Proyecto}" style="color: white;">${proyecto.Nombre_Proyecto}</a></td>
+                        <td>${proyecto.Descripcion_Proyecto}</td>
+                        <td>${proyecto.Estado_Proyecto}</td> <!-- Aquí estaba el error -->
+                        <td>${proyecto.Fecha_Inicio_Proyecto}</td>
+                        <td>${proyecto.Fecha_Fin_Proyecto}</td>
                     </tr>
                 </c:forEach>
             </table>
@@ -145,7 +153,6 @@
         </div>
     </body>
 </html>
-
 
 
 

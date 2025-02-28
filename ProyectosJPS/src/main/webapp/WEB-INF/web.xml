@@ -40,6 +40,19 @@
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
     </servlet-mapping>
+    
+    
+     <!-- Registro del servlet ProyectoServlet -->
+    <servlet>
+        <servlet-name>ProyectoServlet</servlet-name>
+        <servlet-class>Servlets.ProyectoServlet</servlet-class>
+    </servlet>
+
+    <!-- Mapeo de la URL del servlet -->
+    <servlet-mapping>
+        <servlet-name>ProyectoServlet</servlet-name>
+        <url-pattern>/ProyectoServlet</url-pattern>
+    </servlet-mapping>
 
 </web-app>
 

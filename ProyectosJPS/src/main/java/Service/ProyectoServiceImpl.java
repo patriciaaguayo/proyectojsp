@@ -21,7 +21,22 @@ public class ProyectoServiceImpl implements ProyectoService {
     
     @Override
     public List<Proyectos> obtenerProyectos() {
-        return proyectoDAO.obtenerProyectos();
+        return proyectoDAO.obtenerProyectos(); // Este método debería devolver todos los proyectos.
+    }
+
+    @Override
+    public void insertarProyecto(Proyectos proyecto) {
+        proyectoDAO.registrarProyecto(proyecto); // Este método debería insertar el proyecto en la base de datos.
+    }
+
+    @Override
+    public List<Proyectos> buscarPorEstado(String estadoProyecto) {
+        return proyectoDAO.buscarPorEstado(estadoProyecto); 
+    }
+    
+    @Override
+    public void eliminarProyectoPorId(Integer idProyecto) {
+        proyectoDAO.eliminarProyectoPorId(idProyecto); 
     }
     
 }

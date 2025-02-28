@@ -13,5 +13,15 @@ import java.util.List;
  */
 public interface ProyectoService {
     
+   // Método para obtener todos los proyectos
     public List<Proyectos> obtenerProyectos();
+    
+    // Método para insertar un proyecto
+    public void insertarProyecto(Proyectos proyecto);
+    
+    // Método para buscar proyectos por estado
+    public List<Proyectos> buscarPorEstado(String estadoProyecto);
+    
+    // Método para eliminar un proyecto por id
+    public void eliminarProyectoPorId(Integer idProyecto);
 }

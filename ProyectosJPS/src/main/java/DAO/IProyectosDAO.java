@@ -14,4 +14,11 @@ import java.util.List;
 public interface IProyectosDAO {
     
     List<Proyectos> obtenerProyectos();
+    
+    public void registrarProyecto(Proyectos proyecto);
+     
+    public List<Proyectos> buscarPorEstado(String estadoProyecto);
+    
+    // Método para eliminar un proyecto por su ID
+    void eliminarProyectoPorId(Integer idProyecto);
 }
