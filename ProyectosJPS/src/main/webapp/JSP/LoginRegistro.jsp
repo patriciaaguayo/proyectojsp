@@ -6,6 +6,13 @@
 
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%
+    if (session != null) {
+        session.invalidate(); // Cierra cualquier sesión previa antes de cargar la página
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,12 +26,12 @@
             var errorMessage = "<c:out value='${errorMessage}' />";
             var successMessage = "<c:out value='${successMessage}' />";
 
-            if (errorMessage) {
-                alert(errorMessage); // Mostrar error en ventana emergente
+            if (errorMessage.trim() !== "") {
+                alert(errorMessage); // Mostrar error en ventana emergente si existe
             }
 
-            if (successMessage) {
-                alert(successMessage); // Mostrar mensaje de éxito en ventana emergente
+            if (successMessage.trim() !== "") {
+                alert(successMessage); // Mostrar mensaje de éxito en ventana emergente si existe
             }
         };
     </script>
@@ -55,5 +62,6 @@
 
 </body>
 </html>
+
 
 

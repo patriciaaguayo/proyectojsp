@@ -6,6 +6,17 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%
+    String usuario = (String) session.getAttribute("Usuario");
+    String tipoUsuario = (String) session.getAttribute("Tipo_Usuario");
+
+    if (usuario == null) {
+        response.sendRedirect("LoginRegistro.jsp"); // Si no hay sesión, redirigir a login
+        return;
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -98,13 +109,13 @@
                 <button class="btn">Añadir</button>
             </div>
             
-            <c:if test="${Tipo_Usuario == 'Admin'}">
+            <% if ("Admin".equals(tipoUsuario)) { %>
                 <div class="section" onclick="toggleSection('deleteSection')">Eliminar ▼</div>
                 <div class="section-content" id="deleteSection">
                     <label>ID:</label> <input type="number">
                     <button class="btn">Eliminar</button>
                 </div>
-            </c:if>
+            <% } %>
             
             <table>
                 <tr>
@@ -127,10 +138,14 @@
                 </c:forEach>
             </table>
             
-            <button class="btn" onclick="window.location.href='LoginRegistro.jsp'">Cerrar Sesión</button>
+        <form action="/ProyectosJPS/CerrarSesionServlet" method="post">
+            <button type="submit" class="btn">Cerrar Sesión</button>
+        </form>
+         
         </div>
     </body>
 </html>
+
 
 
 

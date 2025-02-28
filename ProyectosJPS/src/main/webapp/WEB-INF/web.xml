@@ -26,6 +26,20 @@
         <servlet-name>UsuarioServlet</servlet-name>
         <url-pattern>/UsuarioServlet</url-pattern>
     </servlet-mapping>
+    
+     <!-- Registro del servlet CerrarSesionServlet -->
+    
+    <servlet>
+        <servlet-name>CerrarSesionServlet</servlet-name>
+        <servlet-class>Servlets.CerrarSesionServlet</servlet-class>
+    </servlet>
+    
+     <!-- Mapeo de la URL del servlet -->
+
+    <servlet-mapping>
+        <servlet-name>CerrarSesionServlet</servlet-name>
+        <url-pattern>/CerrarSesionServlet</url-pattern>
+    </servlet-mapping>
 
 </web-app>
 

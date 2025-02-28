@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -83,22 +84,20 @@ public class UsuarioServlet extends HttpServlet {
             Usuarios usuario = usuarioService.usuarioEncontrado(username);
 
             if (usuario != null) {
-                // Validar contraseña
                 if (usuario.getPassword().equals(password)) {
-                    // Mensaje de éxito
-                    request.setAttribute("successMessage", "Login exitoso.");
-                    // Redirigir a la página Proyectos.jsp
-                    request.getRequestDispatcher("/JSP/Proyectos.jsp").forward(request, response);
+                    // Guardar usuario en sesión
+                    HttpSession session = request.getSession();
+                    session.setAttribute("Usuario", usuario.getNombreUsuario());
+                    session.setAttribute("Tipo_Usuario", usuario.getTipoUsuario()); // Admin o User
+
+                    // Redirigir a la página de proyectos
+                    response.sendRedirect("JSP/Proyectos.jsp");
                 } else {
-                    // Error de contraseña
                     request.setAttribute("errorMessage", "Contraseña incorrecta.");
-                    // Redirigir de nuevo a LoginRegistro.jsp con el mensaje de error
                     request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
                 }
             } else {
-                // Error: el usuario no existe
                 request.setAttribute("errorMessage", "El usuario no existe.");
-                // Redirigir de nuevo a LoginRegistro.jsp con el mensaje de error
                 request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
             }
 
@@ -106,28 +105,28 @@ public class UsuarioServlet extends HttpServlet {
             boolean usuarioExistente = usuarioService.validarUsuario(username);
 
             if (usuarioExistente) {
-                // El usuario ya existe
                 request.setAttribute("errorMessage", "El usuario ya existe.");
-                // Redirigir de nuevo a LoginRegistro.jsp con el mensaje de error
                 request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
             } else {
                 if (password != null && !password.trim().isEmpty()) {
-                    // Registrar nuevo usuario
                     Usuarios nuevoUsuario = new Usuarios(username, password);
+                    String tipoUsuario = nuevoUsuario.getTipoUsuario();
                     usuarioService.registrarUsuario(nuevoUsuario);
-                    // Mensaje de éxito
-                    request.setAttribute("successMessage", "Registro exitoso.");
-                    // Redirigir a la página Proyectos.jsp
-                    request.getRequestDispatcher("/JSP/Proyectos.jsp").forward(request, response);
+
+                    // Guardar usuario en sesión
+                    HttpSession session = request.getSession();
+                    session.setAttribute("Usuario", username);
+                    session.setAttribute("Tipo_Usuario", tipoUsuario);
+
+                    response.sendRedirect("JSP/Proyectos.jsp");
                 } else {
-                    // Error: contraseña vacía
                     request.setAttribute("errorMessage", "La contraseña no puede estar vacía.");
-                    // Redirigir de nuevo a LoginRegistro.jsp con el mensaje de error
                     request.getRequestDispatcher("/JSP/LoginRegistro.jsp").forward(request, response);
                 }
             }
         }
     }
+
 
     /**
      * Returns a short description of the servlet.
