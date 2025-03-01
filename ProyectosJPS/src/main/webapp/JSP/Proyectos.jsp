@@ -24,7 +24,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Proyectos</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/ProyectosStyle.css">
+
+        <!-- Script para mostrar el mensaje emergente -->
         <script>
+            <% String mensaje = (String) request.getAttribute("mensaje"); %>
+            <% if (mensaje != null) { %>
+                alert("<%= mensaje %>");
+            <% } %>
             
             function toggleSection(id) {
                 var section = document.getElementById(id);
@@ -48,14 +54,17 @@
 
             <!-- Filtro de estado con un botón de búsqueda -->
             <label>Estado:</label>
-            <select id="estadoFiltro">
-                <option value="">Todos</option>
-                <option value="En Curso">En curso</option>
-                <option value="Completado">Completado</option>
-            </select>
+            <form action="/ProyectosJPS/ProyectoServlet" method="GET">
+                <select id="estadoFiltro" name="estado">
+                    <option value="">Todos</option>
+                    <option value="En Curso">En curso</option>
+                    <option value="Completado">Completado</option>
+                </select>
 
-            <!-- Botón de búsqueda -->
-            <button onclick="buscarPorEstado()" class="btn">Buscar</button>
+                <!-- Botón de búsqueda -->
+                <button onclick="buscarPorEstado()" class="btn">Buscar</button>
+            
+            </form>
 
             <div class="section" onclick="toggleSection('addSection')">Añadir ▼</div>
             <div class="section-content" id="addSection">
@@ -79,7 +88,6 @@
 
             <!-- Tabla de proyectos -->
             <table>
-
                 <c:if test="${not empty proyectos}">
                     <c:forEach var="proyecto" items="${proyectos}">
                         <tr>
@@ -98,13 +106,13 @@
                 </c:if>
             </table>
 
-        <form action="/ProyectosJPS/CerrarSesionServlet" method="post">
-            <button type="submit" class="btn">Cerrar Sesión</button>
-        </form>
-         
+            <form action="/ProyectosJPS/CerrarSesionServlet" method="post">
+                <button type="submit" class="btn">Cerrar Sesión</button>
+            </form>
         </div>
     </body>
 </html>
+
 
 
 
