@@ -21,22 +21,25 @@
     String descripcionProyecto = request.getParameter("descripcion");
     String estadoProyecto = request.getParameter("estado");
 
+    // Inicializar idProyecto en 0
+    int idProyecto = 0;
+
     // Lista para almacenar las tareas
     List<Tareas> tareas = new ArrayList<>();
 
-    // Verificar si el idProyecto es válido
+    // Verificar si idProyectoStr no está vacío antes de convertirlo
     if (idProyectoStr != null && !idProyectoStr.trim().isEmpty()) {
         try {
-            int idProyecto = Integer.parseInt(idProyectoStr.trim());
+            idProyecto = Integer.parseInt(idProyectoStr.trim());
 
             // Obtener la SessionFactory desde HibernateUtil
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             
             // Obtener las tareas del proyecto desde el servicio
-            TareaService tareaService = new TareaServiceImpl(sessionFactory); // Pasamos la SessionFactory
+            TareaService tareaService = new TareaServiceImpl(sessionFactory);
             tareas = tareaService.obtenerTareasPorProyecto(idProyecto);
 
-            // DEBUG: Verificar en consola si se obtienen tareas
+            // Depuración en consola
             System.out.println("Proyecto ID: " + idProyecto);
             System.out.println("Nombre Proyecto: " + nombreProyecto);
             System.out.println("Descripción Proyecto: " + descripcionProyecto);
@@ -73,8 +76,8 @@
         <p><strong>Descripción:</strong> ${descripcionProyecto}</p>
         <p><strong>Estado:</strong> ${estadoProyecto}</p>
         
-        <!-- Depuración: Mostrar ID del Proyecto y cantidad de tareas encontradas -->
-        <p>ID Proyecto: <%= idProyectoStr %></p>
+        <!-- Depuración: Mostrar ID del Proyecto y cantidad de tareas -->
+        <p>ID Proyecto: <%= idProyecto %></p>
         <p>Cantidad de tareas encontradas: ${tareas.size()}</p>
         
         <div class="section" onclick="toggleSection('addSection')">Añadir ▼</div>
@@ -92,7 +95,7 @@
                         <label for="fechaFinTarea">Fecha de Fin:</label>
                         <input type="date" id="fechaFinTarea" name="fechaFinTarea" required>
                     </div>
-                    <input type="hidden" name="idProyecto" value="${idProyecto}">
+                    <input type="hidden" name="idProyecto" value="<%= idProyecto %>">
                     <button type="submit" class="btn">Añadir Tarea</button>
                 </form>
             </div>
@@ -108,8 +111,6 @@
                 response.sendRedirect("CSS/LoginRegistro.jsp"); // Redirigir al login si no hay sesión
                 return;
             }
-            
-            int idProyecto = Integer.parseInt(idProyectoStr.trim());
         %>
 
         <!-- Mostrar el botón de eliminar tarea solo si el usuario es Admin -->
@@ -172,5 +173,6 @@
 
 </body>
 </html>
+
 
 
