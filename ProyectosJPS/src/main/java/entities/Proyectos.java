@@ -15,12 +15,12 @@ import javax.validation.constraints.Size;
 @Table(name = "proyectos")
 @NamedQueries({
     @NamedQuery(name = "Proyectos.findAll", query = "SELECT p FROM Proyectos p"),
-    @NamedQuery(name = "Proyectos.findByIdProyecto", query = "SELECT p FROM Proyectos p WHERE p.Id_Proyecto = :Id_Proyecto"),
-    @NamedQuery(name = "Proyectos.findByNombreProyecto", query = "SELECT p FROM Proyectos p WHERE p.Nombre_Proyecto = :Nombre_Proyecto"),
-    @NamedQuery(name = "Proyectos.findByEstadoProyecto", query = "SELECT p FROM Proyectos p WHERE p.Estado_Proyecto = :Estado_Proyecto"),
-    @NamedQuery(name = "Proyectos.findByDescripcionProyecto", query = "SELECT p FROM Proyectos p WHERE p.Descripcion_Proyecto = :Descripcion_Proyecto"),
-    @NamedQuery(name = "Proyectos.findByFechaInicioProyecto", query = "SELECT p FROM Proyectos p WHERE p.Fecha_Inicio_Proyecto = :Fecha_Inicio_Proyecto"),
-    @NamedQuery(name = "Proyectos.findByFechaFinProyecto", query = "SELECT p FROM Proyectos p WHERE p.Fecha_Fin_Proyecto = :Fecha_Fin_Proyecto")
+    @NamedQuery(name = "Proyectos.findByIdProyecto", query = "SELECT p FROM Proyectos p WHERE p.idProyecto = :idProyecto"),
+    @NamedQuery(name = "Proyectos.findByNombreProyecto", query = "SELECT p FROM Proyectos p WHERE p.nombreProyecto = :nombreProyecto"),
+    @NamedQuery(name = "Proyectos.findByEstadoProyecto", query = "SELECT p FROM Proyectos p WHERE p.estadoProyecto = :estadoProyecto"),
+    @NamedQuery(name = "Proyectos.findByDescripcionProyecto", query = "SELECT p FROM Proyectos p WHERE p.descripcionProyecto = :descripcionProyecto"),
+    @NamedQuery(name = "Proyectos.findByFechaInicioProyecto", query = "SELECT p FROM Proyectos p WHERE p.fechaInicioProyecto = :fechaInicioProyecto"),
+    @NamedQuery(name = "Proyectos.findByFechaFinProyecto", query = "SELECT p FROM Proyectos p WHERE p.fechaFinProyecto = :fechaFinProyecto")
 })
 public class Proyectos implements Serializable {
 
@@ -30,121 +30,123 @@ public class Proyectos implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Id_Proyecto")
-    private Integer Id_Proyecto;
+    public Integer idProyecto;
 
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "Nombre_Proyecto")
-    private String Nombre_Proyecto;
+    public String nombreProyecto;
 
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "Estado_Proyecto")
-    private String Estado_Proyecto;
+    public String estadoProyecto;
 
     @NotNull
     @Size(max = 300)
     @Column(name = "Descripcion_Proyecto")
-    private String Descripcion_Proyecto;
+    public String descripcionProyecto;
 
     @Basic(optional = false)
     @NotNull
     @Column(name = "Fecha_Inicio_Proyecto")
-    private LocalDate Fecha_Inicio_Proyecto;
+    public LocalDate fechaInicioProyecto;
 
     @NotNull
     @Column(name = "Fecha_Fin_Proyecto")
-    private LocalDate Fecha_Fin_Proyecto;
+    public LocalDate fechaFinProyecto;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "Id_Proyecto")
-    private Collection<Tareas> tareasCollection;
+    public Collection<Tareas> tareasCollection;
 
     // Constructores
     public Proyectos() {
     }
 
     public Proyectos(Integer idProyecto) {
-        this.Id_Proyecto = idProyecto;
+        this.idProyecto = idProyecto;
     }
 
-    public Proyectos(Integer idProyecto, String nombreProyecto, String estadoProyecto, LocalDate fechaFinProyecto) {
-        this.Id_Proyecto = idProyecto;
-        this.Nombre_Proyecto = nombreProyecto;
-        this.Estado_Proyecto = "En curso";
-        this.Fecha_Inicio_Proyecto = LocalDate.now();
-        this.Fecha_Fin_Proyecto = fechaFinProyecto;
+    public Proyectos(Integer idProyecto, String nombreProyecto, String descripcionProyecto, String estadoProyecto, LocalDate fechaFinProyecto) {
+        this.idProyecto = idProyecto;
+        this.nombreProyecto = nombreProyecto;
+        this.descripcionProyecto = descripcionProyecto;
+        this.estadoProyecto = "En curso";
+        this.fechaInicioProyecto = LocalDate.now();
+        this.fechaFinProyecto = fechaFinProyecto;
     }
 
-    public Proyectos(String nombreProyecto, String estadoProyecto, LocalDate fechaFinProyecto) {
-        this.Nombre_Proyecto = nombreProyecto;
-        this.Estado_Proyecto = "En curso";
-        this.Fecha_Inicio_Proyecto = LocalDate.now();
-        this.Fecha_Fin_Proyecto = fechaFinProyecto;
+    public Proyectos(String nombreProyecto, String descripcionProyecto, LocalDate fechaFinProyecto) {
+        this.nombreProyecto = nombreProyecto;
+        this.descripcionProyecto = descripcionProyecto;
+        this.estadoProyecto = "En curso";
+        this.fechaInicioProyecto = LocalDate.now();
+        this.fechaFinProyecto = fechaFinProyecto;
     }
 
     // Getters y Setters con _ (igual que los atributos)
-    public Integer getId_Proyecto() {
-        return Id_Proyecto;
+    public Integer getIdProyecto() {
+        return idProyecto;
     }
 
-    public void setId_Proyecto(Integer Id_Proyecto) {
-        this.Id_Proyecto = Id_Proyecto;
+    public void setIdProyecto(Integer Id_Proyecto) {
+        this.idProyecto = Id_Proyecto;
     }
 
-    public String getNombre_Proyecto() {
-        return Nombre_Proyecto;
+    public String getNombreProyecto() {
+        return nombreProyecto;
     }
 
-    public void setNombre_Proyecto(String Nombre_Proyecto) {
-        this.Nombre_Proyecto = Nombre_Proyecto;
+    public void setNombreProyecto(String Nombre_Proyecto) {
+        this.nombreProyecto = Nombre_Proyecto;
     }
 
-    public String getEstado_Proyecto() {
-        return Estado_Proyecto;
+    public String getEstadoProyecto() {
+        return estadoProyecto;
     }
 
-    public void setEstado_Proyecto(String Estado_Proyecto) {
-        this.Estado_Proyecto = Estado_Proyecto;
+    public void setEstadoProyecto(String Estado_Proyecto) {
+        this.estadoProyecto = Estado_Proyecto;
     }
 
-    public String getDescripcion_Proyecto() {
-        return Descripcion_Proyecto;
+    public String getDescripcionProyecto() {
+        return descripcionProyecto;
     }
 
-    public void setDescripcion_Proyecto(String Descripcion_Proyecto) {
-        this.Descripcion_Proyecto = Descripcion_Proyecto;
+    public void setDescripcionProyecto(String Descripcion_Proyecto) {
+        this.descripcionProyecto = Descripcion_Proyecto;
     }
 
-    public LocalDate getFecha_Inicio_Proyecto() {
-        return Fecha_Inicio_Proyecto;
+    public LocalDate getFechaInicioProyecto() {
+        return fechaInicioProyecto;
     }
 
-    public void setFecha_Inicio_Proyecto(LocalDate Fecha_Inicio_Proyecto) {
-        this.Fecha_Inicio_Proyecto = Fecha_Inicio_Proyecto;
+    public void setFechaInicioProyecto(LocalDate Fecha_Inicio_Proyecto) {
+        this.fechaInicioProyecto = Fecha_Inicio_Proyecto;
     }
 
-    public LocalDate getFecha_Fin_Proyecto() {
-        return Fecha_Fin_Proyecto;
+    public LocalDate getFechaFinProyecto() {
+        return fechaFinProyecto;
     }
 
-    public void setFecha_Fin_Proyecto(LocalDate Fecha_Fin_Proyecto) {
-        this.Fecha_Fin_Proyecto = Fecha_Fin_Proyecto;
+    public void setFechaFinProyecto(LocalDate Fecha_Fin_Proyecto) {
+        this.fechaFinProyecto = Fecha_Fin_Proyecto;
     }
 
-    public Collection<Tareas> getTareas_Collection() {
+    public Collection<Tareas> getTareasCollection() {
         return tareasCollection;
     }
 
-    public void setTareas_Collection(Collection<Tareas> tareasCollection) {
+    public void setTareasCollection(Collection<Tareas> tareasCollection) {
         this.tareasCollection = tareasCollection;
     }
 
     // Métodos hashCode, equals y toString
     @Override
     public int hashCode() {
-        return (Id_Proyecto != null ? Id_Proyecto.hashCode() : 0);
+        return (idProyecto != null ? idProyecto.hashCode() : 0);
     }
 
     @Override
@@ -153,12 +155,12 @@ public class Proyectos implements Serializable {
             return false;
         }
         Proyectos other = (Proyectos) object;
-        return (this.Id_Proyecto != null || other.Id_Proyecto == null) && (this.Id_Proyecto == null || this.Id_Proyecto.equals(other.Id_Proyecto));
+        return (this.idProyecto != null || other.idProyecto == null) && (this.idProyecto == null || this.idProyecto.equals(other.idProyecto));
     }
 
     @Override
     public String toString() {
-        return "entities.Proyectos[ Id_Proyecto=" + Id_Proyecto + " ]";
+        return "entities.Proyectos[ Id_Proyecto=" + idProyecto + " ]";
     }
 }
 

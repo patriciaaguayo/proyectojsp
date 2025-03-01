@@ -47,8 +47,9 @@ INSERT INTO Usuarios (Nombre_Usuario, Password, Tipo_Usuario) VALUES
 
 -- Inserciones en la tabla Proyectos
 INSERT INTO Proyectos (Nombre_Proyecto, Estado_Proyecto, Descripcion_Proyecto, Fecha_Inicio_Proyecto, Fecha_Fin_Proyecto) VALUES
-('Proyecto Alpha', 'En curso', 'Gestión de recursos humanos', '2024-01-10', '2024-12-20'),
-('Proyecto Beta', 'Terminado', 'Desarrollo de aplicación web', '2024-02-15', '2024-11-25');
+('Proyecto Alpha', 'En curso', 'Gestión de recursos humanos', '2025-01-10', '2025-12-20'),
+('Proyecto Gamma', 'Completado', 'Gestión de materiales tóxicos', '2024-04-10', '2024-07-20'),
+('Proyecto Beta', 'Completado', 'Desarrollo de aplicación web', '2024-02-15', '2024-11-25');
 
 -- Inserciones en la tabla Tareas
 INSERT INTO Tareas (Descripcion_Tarea, Id_Proyecto, Responsable, Estado_Tarea, Fecha_Inicio_Tarea, Fecha_Fin_Tarea) VALUES

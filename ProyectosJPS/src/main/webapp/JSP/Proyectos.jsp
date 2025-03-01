@@ -12,7 +12,7 @@
     String tipoUsuario = (String) session.getAttribute("Tipo_Usuario");
 
     if (usuario == null) {
-        response.sendRedirect("LoginRegistro.jsp"); // Si no hay sesión, redirigir a login
+        response.sendRedirect("CSS/LoginRegistro.jsp"); // Si no hay sesión, redirigir a login
         return;
     }
 %>
@@ -23,66 +23,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Proyectos</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #121212;
-                color: white;
-            }
-            .container {
-                width: 90%;
-                max-width: 1000px;
-                margin: auto;
-                padding: 20px;
-                background-color: #1e1e1e;
-                border-radius: 10px;
-                box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
-            }
-            .section {
-                background-color: #222;
-                padding: 10px;
-                margin-bottom: 10px;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-            .section-content {
-                display: none;
-                padding: 10px;
-            }
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 10px;
-            }
-            th, td {
-                border: 1px solid #444;
-                padding: 10px;
-                text-align: center;
-            }
-            th {
-                background-color: #333;
-            }
-            .btn {
-                background-color: #444;
-                color: white;
-                border: none;
-                padding: 10px;
-                cursor: pointer;
-                border-radius: 5px;
-            }
-            .btn:hover {
-                background-color: #555;
-            }
-            @media (max-width: 768px) {
-                table, th, td {
-                    display: block;
-                    width: 100%;
-                }
-            }
-        </style>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/ProyectosStyle.css">
         <script>
+            
             function toggleSection(id) {
                 var section = document.getElementById(id);
                 section.style.display = (section.style.display === 'block') ? 'none' : 'block';
@@ -92,18 +35,27 @@
                 var estado = document.getElementById("estadoFiltro").value;
                 window.location.href = "ProyectoServlet?estado=" + estado; // Enviar el estado para filtrar
             }
+
+            function buscarPorEstado() {
+                var estado = document.getElementById("estadoFiltro").value;
+                window.location.href = "ProyectoServlet?estado=" + estado; // Filtrar por estado al hacer clic en el botón
+            }
         </script>
     </head>
     <body>
         <div class="container">
             <h1>Proyectos</h1>
+
+            <!-- Filtro de estado con un botón de búsqueda -->
             <label>Estado:</label>
-            <select id="estadoFiltro" onchange="filtrarProyectos()">
+            <select id="estadoFiltro">
                 <option value="">Todos</option>
-                <option value="Pendiente">Pendiente</option>
-                <option value="En progreso">En progreso</option>
+                <option value="En Curso">En curso</option>
                 <option value="Completado">Completado</option>
             </select>
+
+            <!-- Botón de búsqueda -->
+            <button onclick="buscarPorEstado()" class="btn">Buscar</button>
 
             <div class="section" onclick="toggleSection('addSection')">Añadir ▼</div>
             <div class="section-content" id="addSection">
@@ -114,7 +66,7 @@
                     <button type="submit" class="btn">Añadir</button>
                 </form>
             </div>
-            
+
             <% if ("Admin".equals(tipoUsuario)) { %>
                 <div class="section" onclick="toggleSection('deleteSection')">Eliminar ▼</div>
                 <div class="section-content" id="deleteSection">
@@ -124,28 +76,28 @@
                     </form>
                 </div>
             <% } %>
-            
+
+            <!-- Tabla de proyectos -->
             <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Estado</th>
-                    <th>Inicio</th>
-                    <th>Finalización</th>
-                </tr>
-                <c:forEach var="proyecto" items="${proyectos}">
-                    <tr>
-                        <td>${proyecto.Id_Proyecto}</td>
-                        <td><a href="Tareas.jsp?id=${proyecto.Id_Proyecto}" style="color: white;">${proyecto.Nombre_Proyecto}</a></td>
-                        <td>${proyecto.Descripcion_Proyecto}</td>
-                        <td>${proyecto.Estado_Proyecto}</td> <!-- Aquí estaba el error -->
-                        <td>${proyecto.Fecha_Inicio_Proyecto}</td>
-                        <td>${proyecto.Fecha_Fin_Proyecto}</td>
-                    </tr>
-                </c:forEach>
+
+                <c:if test="${not empty proyectos}">
+                    <c:forEach var="proyecto" items="${proyectos}">
+                        <tr>
+                            <td>${proyecto.idProyecto}</td>
+                            <td><a href="Tareas.jsp?id=${proyecto.idProyecto}" style="color: white;">${proyecto.nombreProyecto}</a></td>
+                            <td>${proyecto.descripcionProyecto}</td>
+                            <td>${proyecto.estadoProyecto}</td>
+                            <td>${proyecto.fechaInicioProyecto}</td>
+                            <td>${proyecto.fechaFinProyecto}</td>
+                        </tr>
+                    </c:forEach>
+                </c:if>
+
+                <c:if test="${empty proyectos}">
+                    <tr><td colspan="6">No hay proyectos disponibles</td></tr>
+                </c:if>
             </table>
-            
+
         <form action="/ProyectosJPS/CerrarSesionServlet" method="post">
             <button type="submit" class="btn">Cerrar Sesión</button>
         </form>
@@ -153,6 +105,7 @@
         </div>
     </body>
 </html>
+
 
 
 

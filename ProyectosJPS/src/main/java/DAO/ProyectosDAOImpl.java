@@ -37,40 +37,36 @@ public class ProyectosDAOImpl implements IProyectosDAO {
         Transaction transaction = null;
         Session session = null;
 
+        System.out.println("Comenzando la transacción...");
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
 
+            System.out.println("Guardando el proyecto...");
             session.save(proyecto); // Guardar el proyecto
 
             transaction.commit(); // Confirmar la transacción
             System.out.println("\n✅ Proyecto registrado exitosamente.");
-
         } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) { // Verifica si la transacción está activa
+            if (transaction != null && transaction.isActive()) {
                 try {
-                    transaction.rollback(); // Hacer rollback solo si es necesario
+                    transaction.rollback();
                     System.out.println("\n⚠️ Transacción revertida.");
                 } catch (Exception rollbackEx) {
                     System.out.println("\n❌ Error al hacer rollback: " + rollbackEx.getMessage());
-                    rollbackEx.printStackTrace();
                 }
             }
             System.out.println("\n❌ Error al registrar el proyecto: " + e.getMessage());
             e.printStackTrace();
-        } finally {
-            if (session != null && session.isOpen()) { // Asegurar que la sesión se cierra correctamente
-                session.close();
-                System.out.println("\n🔒 Sesión cerrada correctamente.");
-            }
         }
+
     }
 
     @Override
     public List<Proyectos> buscarPorEstado(String estadoProyecto) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createNamedQuery("Proyectos.findByEstadoProyecto", Proyectos.class)
-                    .setParameter("Estado_Proyecto", estadoProyecto)
+                    .setParameter("estadoProyecto", estadoProyecto)
                     .list();
         } catch (Exception e) {
             throw new RuntimeException("Error al buscar proyecto en la base de datos", e);

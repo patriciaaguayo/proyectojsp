@@ -101,31 +101,55 @@ public class ProyectoServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String nombreProyecto = request.getParameter("nombreProyecto");
-        String descripcionProyecto = request.getParameter("descripcionProyecto");
-        String fechaFin = request.getParameter("fechaFin");
-        String idProyecto = request.getParameter("idProyecto");
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String nombreProyecto = request.getParameter("nombreProyecto");
+    String descripcionProyecto = request.getParameter("descripcionProyecto");
+    String fechaFin = request.getParameter("fechaFin");
+    String idProyecto = request.getParameter("idProyecto");
+    LocalDate inicio = LocalDate.now();
 
-        // Si se está añadiendo un nuevo proyecto
-        if (nombreProyecto != null && descripcionProyecto != null) {
-            Proyectos nuevoProyecto = new Proyectos();
-            nuevoProyecto.setNombre_Proyecto(nombreProyecto);
-            nuevoProyecto.setDescripcion_Proyecto(descripcionProyecto);
-            nuevoProyecto.setFecha_Fin_Proyecto(LocalDate.parse(fechaFin));
+    System.out.println("nombreProyecto: " + nombreProyecto);
+    System.out.println("descripcionProyecto: " + descripcionProyecto);
+    System.out.println("fechaFin: " + fechaFin);
+    System.out.println("idProyecto: " + idProyecto);
 
-            proyectoService.insertarProyecto(nuevoProyecto);
-        }
-
-        // Si se está eliminando un proyecto
-        if (idProyecto != null && !idProyecto.isEmpty()) {
-            Integer id = Integer.parseInt(idProyecto);
-            proyectoService.eliminarProyectoPorId(id);
-        }
-
-        // Redirigir después de la acción
-        response.sendRedirect("ProyectoServlet");
+    // Convertir fechaFin a LocalDate
+    LocalDate fechaFinProyecto = null;
+    if (fechaFin != null && !fechaFin.isEmpty()) {
+        fechaFinProyecto = LocalDate.parse(fechaFin);
     }
+
+    // Verificar si la fecha de finalización es posterior a la fecha de inicio
+    if (fechaFinProyecto != null && !fechaFinProyecto.isAfter(inicio)) {
+        // Si la fecha de finalización no es posterior, redirigir con un mensaje de error
+        request.setAttribute("errorMessage", "La fecha de finalización debe ser posterior a la fecha de inicio.");
+        request.getRequestDispatcher("/ProyectosJPS/Proyectos.jsp").forward(request, response);
+        return; // Salir para no continuar con el proceso de inserción
+    }
+
+    // Si los datos son correctos, crear y guardar el proyecto
+    if (nombreProyecto != null && descripcionProyecto != null && fechaFin != null) {
+        Proyectos nuevoProyecto = new Proyectos();
+        nuevoProyecto.setNombreProyecto(nombreProyecto);
+        nuevoProyecto.setDescripcionProyecto(descripcionProyecto);
+        nuevoProyecto.setEstadoProyecto("En curso");
+        nuevoProyecto.setFechaInicioProyecto(inicio);
+        nuevoProyecto.setFechaFinProyecto(fechaFinProyecto);
+
+        proyectoService.insertarProyecto(nuevoProyecto);
+    }
+
+    // Si se está eliminando un proyecto
+    if (idProyecto != null && !idProyecto.isEmpty()) {
+        Integer id = Integer.parseInt(idProyecto);
+        proyectoService.eliminarProyectoPorId(id);
+    }
+
+    // Redirigir después de la acción
+    response.sendRedirect("ProyectoServlet");
+}
+
+
 
     /**
      * Returns a short description of the servlet.
