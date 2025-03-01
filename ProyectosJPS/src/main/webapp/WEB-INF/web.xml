@@ -53,6 +53,18 @@
         <servlet-name>ProyectoServlet</servlet-name>
         <url-pattern>/ProyectoServlet</url-pattern>
     </servlet-mapping>
+    
+       <!-- Registro del servlet TareaServlet -->
+    <servlet>
+        <servlet-name>TareaServlet</servlet-name>
+        <servlet-class>Servlets.TareaServlet</servlet-class>
+    </servlet>
+
+    <!-- Mapeo de la URL del servlet -->
+    <servlet-mapping>
+        <servlet-name>TareaServlet</servlet-name>
+        <url-pattern>/TareaServlet</url-pattern>
+    </servlet-mapping>
 
 </web-app>
 

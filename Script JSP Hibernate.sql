@@ -56,3 +56,7 @@ INSERT INTO Tareas (Descripcion_Tarea, Id_Proyecto, Responsable, Estado_Tarea, F
 ('Diseñar la base de datos', 1, 'Juan Pérez', 'Pendiente', '2024-03-01', '2024-03-15'),
 ('Implementar backend', 1, 'Ana Gómez', 'Completada', '2024-03-10', '2024-04-01'),
 ('Diseñar UI/UX', 2, 'Carlos Díaz', 'En progreso', '2024-04-05', '2024-05-10');
+
+select * from Tareas where Id_Proyecto = 1;
+
+SET GLOBAL max_connections = 500; 

@@ -92,7 +92,18 @@
                     <c:forEach var="proyecto" items="${proyectos}">
                         <tr>
                             <td>${proyecto.idProyecto}</td>
-                            <td><a href="Tareas.jsp?id=${proyecto.idProyecto}" style="color: white;">${proyecto.nombreProyecto}</a></td>
+                            <td>
+                                
+                                <%
+                                    System.out.println("Usuario: " + usuario);
+                                    System.out.println("Tipo de Usuario: " + tipoUsuario);
+                                %>
+                                
+                                <a href="/ProyectosJPS/JSP/Tareas.jsp?id=${proyecto.idProyecto}&nombre=${proyecto.nombreProyecto}&descripcion=${proyecto.descripcionProyecto}&estado=${proyecto.estadoProyecto}" style="color: white;">
+                                    ${proyecto.nombreProyecto}
+                                </a>
+
+                            </td>
                             <td>${proyecto.descripcionProyecto}</td>
                             <td>${proyecto.estadoProyecto}</td>
                             <td>${proyecto.fechaInicioProyecto}</td>

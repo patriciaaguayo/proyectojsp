@@ -13,58 +13,46 @@ import org.hibernate.Transaction;
 
 public class ProyectosDAOImpl implements IProyectosDAO {
     
-    public ProyectosDAOImpl(SessionFactory sessionFactory){};
-    
-    public ProyectosDAOImpl(){};
+    private SessionFactory sessionFactory;
+
+    public ProyectosDAOImpl(SessionFactory sessionFactory){
+        this.sessionFactory = sessionFactory;
+    }
+
+    public ProyectosDAOImpl() {
+        this.sessionFactory = HibernateUtil.getSessionFactory(); // Obtener sessionFactory por defecto
+    }
 
     @Override
     public List<Proyectos> obtenerProyectos() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
+        try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM Proyectos", Proyectos.class).list();
-
         } catch (Exception e) {
             System.out.println("\n Error al obtener los proyectos: " + e.getMessage());
             return null;
         }
     }
 
-    /**
-     * @param proyecto se le pasa el autor a registrar
-     */
-    
     public void registrarProyecto(Proyectos proyecto) {
         Transaction transaction = null;
-        Session session = null;
-
-        System.out.println("Comenzando la transacción...");
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-
-            System.out.println("Guardando el proyecto...");
             session.save(proyecto); // Guardar el proyecto
-
             transaction.commit(); // Confirmar la transacción
             System.out.println("\n✅ Proyecto registrado exitosamente.");
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
-                try {
-                    transaction.rollback();
-                    System.out.println("\n⚠️ Transacción revertida.");
-                } catch (Exception rollbackEx) {
-                    System.out.println("\n❌ Error al hacer rollback: " + rollbackEx.getMessage());
-                }
+                transaction.rollback();
+                System.out.println("\n⚠️ Transacción revertida.");
             }
             System.out.println("\n❌ Error al registrar el proyecto: " + e.getMessage());
             e.printStackTrace();
         }
-
     }
 
     @Override
     public List<Proyectos> buscarPorEstado(String estadoProyecto) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return session.createNamedQuery("Proyectos.findByEstadoProyecto", Proyectos.class)
                     .setParameter("estadoProyecto", estadoProyecto)
                     .list();
@@ -72,24 +60,23 @@ public class ProyectosDAOImpl implements IProyectosDAO {
             throw new RuntimeException("Error al buscar proyecto en la base de datos", e);
         }
     }
-    
+
     @Override
     public void eliminarProyectoPorId(Integer idProyecto) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            
-            // Buscar el proyecto por su ID
             Proyectos proyecto = session.get(Proyectos.class, idProyecto);
-            
-            // Si el proyecto existe, eliminarlo
             if (proyecto != null) {
                 session.delete(proyecto);
+                System.out.println("\n✅ Proyecto eliminado exitosamente.");
+            } else {
+                System.out.println("\n⚠️ Proyecto no encontrado con el ID: " + idProyecto);
             }
-            
             session.getTransaction().commit();
         } catch (Exception e) {
             throw new RuntimeException("Error al eliminar proyecto por ID", e);
         }
     }
-    
 }
+
+

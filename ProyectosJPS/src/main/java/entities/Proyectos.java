@@ -58,7 +58,7 @@ public class Proyectos implements Serializable {
     @Column(name = "Fecha_Fin_Proyecto")
     public LocalDate fechaFinProyecto;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Id_Proyecto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     public Collection<Tareas> tareasCollection;
 
     // Constructores

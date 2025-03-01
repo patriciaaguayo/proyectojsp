@@ -22,18 +22,18 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author alumno
+ * @author Patricia Aguayo
  */
 @Entity
 @Table(name = "tareas")
 @NamedQueries({
     @NamedQuery(name = "Tareas.findAll", query = "SELECT t FROM Tareas t"),
-    @NamedQuery(name = "Tareas.findByIdTarea", query = "SELECT t FROM Tareas t WHERE t.Id_Tarea = :Id_Tarea"),
-    @NamedQuery(name = "Tareas.findByDescripcionTarea", query = "SELECT t FROM Tareas t WHERE t.Descripcion_Tarea = :Descripcion_Tarea"),
-    @NamedQuery(name = "Tareas.findByResponsable", query = "SELECT t FROM Tareas t WHERE t.Responsable = :Responsable"),
-    @NamedQuery(name = "Tareas.findByEstadoTarea", query = "SELECT t FROM Tareas t WHERE t.Estado_Tarea = :Estado_Tarea"),
-    @NamedQuery(name = "Tareas.findByFechaInicioTarea", query = "SELECT t FROM Tareas t WHERE t.Fecha_Inicio_Tarea = :Fecha_Inicio_Tarea"),
-    @NamedQuery(name = "Tareas.findByFechaFinTarea", query = "SELECT t FROM Tareas t WHERE t.Fecha_Fin_Tarea = :Fecha_Fin_Tarea")})
+    @NamedQuery(name = "Tareas.findByIdTarea", query = "SELECT t FROM Tareas t WHERE t.idTarea = :idTarea"),
+    @NamedQuery(name = "Tareas.findByDescripcionTarea", query = "SELECT t FROM Tareas t WHERE t.descripcionTarea = :descripcionTarea"),
+    @NamedQuery(name = "Tareas.findByResponsable", query = "SELECT t FROM Tareas t WHERE t.responsable = :responsable"),
+    @NamedQuery(name = "Tareas.findByEstadoTarea", query = "SELECT t FROM Tareas t WHERE t.estadoTarea = :estadoTarea"),
+    @NamedQuery(name = "Tareas.findByFechaInicioTarea", query = "SELECT t FROM Tareas t WHERE t.fechaInicioTarea = :fechaInicioTarea"),
+    @NamedQuery(name = "Tareas.findByFechaFinTarea", query = "SELECT t FROM Tareas t WHERE t.fechaFinTarea = :fechaFinTarea")})
 public class Tareas implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,125 +41,129 @@ public class Tareas implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Id_Tarea")
-    private Integer Id_Tarea;
+    private Integer idTarea;
     
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 300)
     @Column(name = "Descripcion_Tarea")
-    private String Descripcion_Tarea;
+    private String descripcionTarea;
     
     @NotNull
     @Size(max = 36)
     @Column(name = "Responsable")
-    private String Responsable;
+    private String responsable;
     
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "Estado_Tarea")
-    private String Estado_Tarea;
+    private String estadoTarea;
     
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "Fecha_Inicio_Tarea")
-    private LocalDate Fecha_Inicio_Tarea;
+    private LocalDate fechaInicioTarea;
     
     @NotNull
     @Size(max = 10)
     @Column(name = "Fecha_Fin_Tarea")
-    private LocalDate Fecha_Fin_Tarea;
+    private LocalDate fechaFinTarea;
     
     @NotNull
     @JoinColumn(name = "Id_Proyecto", referencedColumnName = "Id_Proyecto")
     @ManyToOne(optional = false)
-    private Proyectos Id_Proyecto;
+    private Proyectos idProyecto;
 
     public Tareas() {
     }
 
     public Tareas(Integer idTarea) {
-        this.Id_Tarea = idTarea;
+        this.idTarea = idTarea;
     }
 
-    public Tareas(Integer idTarea, String descripcionTarea, String estadoTarea, LocalDate fechaFinTarea) {
+    public Tareas(Integer idTarea, Proyectos proyecto, String descripcionTarea, String responsable, String estadoTarea, LocalDate fechaFinTarea) {
         
-        this.Id_Tarea = idTarea;
-        this.Descripcion_Tarea = descripcionTarea;
-        this.Estado_Tarea = "Pendiente";
-        this.Fecha_Inicio_Tarea = LocalDate.now();
-        this.Fecha_Fin_Tarea = fechaFinTarea;
+        this.idTarea = idTarea;
+        this.idProyecto = proyecto;
+        this.descripcionTarea = descripcionTarea;
+        this.responsable = responsable;
+        this.estadoTarea = "Pendiente";
+        this.fechaInicioTarea = LocalDate.now();
+        this.fechaFinTarea = fechaFinTarea;
     }
     
-    public Tareas(String descripcionTarea, String estadoTarea, LocalDate fechaFinTarea) {
+    public Tareas( Proyectos proyecto, String descripcionTarea, String responsable, String estadoTarea, LocalDate fechaFinTarea) {
         
-        this.Descripcion_Tarea = descripcionTarea;
-        this.Estado_Tarea = "Pendiente";
-        this.Fecha_Inicio_Tarea = LocalDate.now();
-        this.Fecha_Fin_Tarea = fechaFinTarea;
+        this.idProyecto = proyecto;
+        this.descripcionTarea = descripcionTarea;
+        this.responsable = responsable;
+        this.estadoTarea = "Pendiente";
+        this.fechaInicioTarea = LocalDate.now();
+        this.fechaFinTarea = fechaFinTarea;
     }
 
     public Integer getIdTarea() {
-        return Id_Tarea;
+        return idTarea;
     }
 
     public void setIdTarea(Integer idTarea) {
-        this.Id_Tarea = idTarea;
+        this.idTarea = idTarea;
     }
 
     public String getDescripcionTarea() {
-        return Descripcion_Tarea;
+        return descripcionTarea;
     }
 
     public void setDescripcionTarea(String descripcionTarea) {
-        this.Descripcion_Tarea = descripcionTarea;
+        this.descripcionTarea = descripcionTarea;
     }
 
     public String getResponsable() {
-        return Responsable;
+        return responsable;
     }
 
     public void setResponsable(String responsable) {
-        this.Responsable = responsable;
+        this.responsable = responsable;
     }
 
     public String getEstadoTarea() {
-        return Estado_Tarea;
+        return estadoTarea;
     }
 
     public void setEstadoTarea(String estadoTarea) {
-        this.Estado_Tarea = estadoTarea;
+        this.estadoTarea = estadoTarea;
     }
 
     public LocalDate getFechaInicioTarea() {
-        return Fecha_Inicio_Tarea;
+        return fechaInicioTarea;
     }
 
     public void setFechaInicioTarea(LocalDate fechaInicioTarea) {
-        this.Fecha_Inicio_Tarea = fechaInicioTarea;
+        this.fechaInicioTarea = fechaInicioTarea;
     }
 
     public LocalDate getFechaFinTarea() {
-        return Fecha_Fin_Tarea;
+        return fechaFinTarea;
     }
 
     public void setFechaFinTarea(LocalDate fechaFinTarea) {
-        this.Fecha_Fin_Tarea = fechaFinTarea;
+        this.fechaFinTarea = fechaFinTarea;
     }
 
     public Proyectos getIdProyecto() {
-        return Id_Proyecto;
+        return idProyecto;
     }
 
     public void setIdProyecto(Proyectos idProyecto) {
-        this.Id_Proyecto = idProyecto;
+        this.idProyecto = idProyecto;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (Id_Tarea != null ? Id_Tarea.hashCode() : 0);
+        hash += (idTarea != null ? idTarea.hashCode() : 0);
         return hash;
     }
 
@@ -170,7 +174,7 @@ public class Tareas implements Serializable {
             return false;
         }
         Tareas other = (Tareas) object;
-        if ((this.Id_Tarea == null && other.Id_Tarea != null) || (this.Id_Tarea != null && !this.Id_Tarea.equals(other.Id_Tarea))) {
+        if ((this.idTarea == null && other.idTarea != null) || (this.idTarea != null && !this.idTarea.equals(other.idTarea))) {
             return false;
         }
         return true;
@@ -178,7 +182,7 @@ public class Tareas implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Tareas[ idTarea=" + Id_Tarea + " ]";
+        return "entities.Tareas[ idTarea=" + idTarea + " ]";
     }
     
 }
