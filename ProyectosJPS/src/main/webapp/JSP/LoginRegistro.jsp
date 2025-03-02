@@ -19,7 +19,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login o Registro</title>
-    <link rel="stylesheet" href="CSS/LoginStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/LoginStyle.css">
 
     <script type="text/javascript">
         window.onload = function() {
@@ -43,7 +43,7 @@
 
         <!-- Formulario de Login -->
         <h3>Iniciar sesión</h3>
-        <form action="UsuarioServlet" method="post">
+        <form action="/ProyectosJPS/UsuarioServlet" method="post">
             <input type="text" name="nombreUsuario" placeholder="Nombre de usuario" required><br>
             <input type="password" name="password" placeholder="Contraseña" required><br>
             <button type="submit" name="action" value="login" id="BotonIniciar">Iniciar sesión</button>
@@ -53,7 +53,7 @@
 
         <!-- Formulario de Registro -->
         <h3>¿No tienes cuenta? Regístrate</h3>
-        <form action="UsuarioServlet" method="post">
+        <form action="/ProyectosJPS/UsuarioServlet" method="post">
             <input type="text" name="nombreUsuario" placeholder="Nombre de usuario" required><br>
             <input type="password" name="password" placeholder="Contraseña" required><br>
             <button type="submit" name="action" value="register">Registrarse</button>
