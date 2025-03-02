@@ -7,7 +7,7 @@
 /* Fondo y configuración general de la página */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #030405;
     color: #333;
 }
 
@@ -15,8 +15,8 @@ body {
 .container {
     width: 80%;
     margin: 0 auto;
-    padding: 20px;
-    background-color: white;
+    padding: 30px;
+    background-color: #111924;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 30px;
@@ -24,22 +24,25 @@ body {
 
 /* Título */
 h1 {
-    color: #007BFF;
+    color: white;
     font-size: 2rem;
     margin-bottom: 20px;
+    text-align: center;
+    margin-top: 20px;
 }
 
 /* Estilo de los párrafos de información */
 p {
     font-size: 1.2rem;
     margin-bottom: 10px;
+    color: white;
 }
 
 /* Tabla */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 table, th, td {
@@ -49,6 +52,7 @@ table, th, td {
 th, td {
     padding: 12px;
     text-align: left;
+    color: white;
 }
 
 th {
@@ -58,16 +62,16 @@ th {
 
 /* Estilo para las filas de la tabla */
 tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #2B3541;
 }
 
 tr:hover {
-    background-color: #f1f1f1;
+    background-color: #647081;
 }
 
 /* Botón */
 .btn {
-    background-color: #28a745;
+    background-color: #647081;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -79,30 +83,32 @@ tr:hover {
 }
 
 .btn:hover {
-    background-color: #218838;
+    background-color: #8C98AA;
 }
 
 /* Sección de eliminación de tarea */
 .section {
-    background-color: #f7f7f7;
-    padding: 10px;
-    margin-top: 20px;
+    background-color: #2B3541;
+    padding: 15px;
+    margin-top: 50px;
     cursor: pointer;
     font-size: 1.1rem;
     border-radius: 4px;
     text-align: center;
+    color: white;
 }
 
 .section:hover {
-    background-color: #e2e2e2;
+    background-color: #647081;
 }
 
 .section-content {
     display: none;
     margin-top: 10px;
-    padding: 20px;
-    background-color: #f1f1f1;
+    padding: 30px;
+    background-color: #2B3541;
     border-radius: 6px;
+    color: white;
 }
 
 .section-content input[type="number"] {
@@ -117,7 +123,7 @@ tr:hover {
 .section-content button {
     width: 100%;
     padding: 10px;
-    background-color: #dc3545;
+    background-color: #647081;
     color: white;
     border: none;
     border-radius: 4px;
@@ -127,13 +133,20 @@ tr:hover {
 }
 
 .section-content button:hover {
-    background-color: #c82333;
+    background-color: #8C98AA;
+}
+
+.Campo{
+    margin-bottom: 20px;
+    width: 180px;
+    height: 30px;
+    margin-right: 20px;
 }
 
 /* Estilo de los enlaces */
 a {
     text-decoration: none;
-    color: #007BFF;
+    color: white;
     font-size: 1rem;
     display: inline-block;
     margin-top: 20px;
@@ -141,6 +154,60 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+/* Contenedor del filtro de estado */
+.filter-container {
+    display: flex;
+    justify-content: center; /* Centra el contenido */
+    align-items: center; /* Alinea verticalmente */
+    gap: 15px; /* Espacio entre elementos */
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+/* Estilo del label */
+.filter-container label {
+    font-size: 1.2rem;
+    color: white;
+}
+
+/* Estilo del select */
+.filter-container select {
+    padding: 12px; /* Más alto */
+    width: 250px; /* Más ancho */
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background-color: #2B3541;
+    color: white;
+}
+
+/* Botón */
+.filter-container .btn {
+    padding: 12px 20px; /* Tamaño más grande */
+    font-size: 1rem;
+    width: 150px; /* Aumentar el ancho */
+    text-align: center;
+}
+
+#Cerrar{
+    display: flex;
+    justify-content: center; /* Centra el contenido */
+    align-items: center; /* Alinea verticalmente */
+    margin-top: 50px;
+}
+
+.Volver{
+    display: flex;
+    justify-content: center; /* Centra el contenido */
+    align-items: center; /* Alinea verticalmente */
+    margin-top: 30px;
+    font-size: 18px;
+}
+
+.InfoProyecto{
+    margin-top: 30px;
 }
 
 

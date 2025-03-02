@@ -53,8 +53,9 @@
             <h1>Proyectos</h1>
 
             <!-- Filtro de estado con un botón de búsqueda -->
-            <label>Estado:</label>
-            <form action="/ProyectosJPS/ProyectoServlet" method="GET">
+            
+            <form action="/ProyectosJPS/ProyectoServlet" method="GET" class="filter-container">
+                <label>Estado:</label>
                 <select id="estadoFiltro" name="estado">
                     <option value="">Todos</option>
                     <option value="En Curso">En curso</option>
@@ -69,9 +70,9 @@
             <div class="section" onclick="toggleSection('addSection')">Añadir ▼</div>
             <div class="section-content" id="addSection">
                 <form action="/ProyectosJPS/ProyectoServlet" method="POST">
-                    <label>Nombre:</label> <input type="text" name="nombreProyecto" required>
-                    <label>Descripción:</label> <input type="text" name="descripcionProyecto" required>
-                    <label>Finalización:</label> <input type="date" name="fechaFin" required>
+                    <label>Nombre:</label> <input class="Campo" type="text" name="nombreProyecto" required>
+                    <label>Descripción:</label> <input class="Campo" type="text" name="descripcionProyecto" required>
+                    <label>Finalización:</label> <input class="Campo" type="date" name="fechaFin" required>
                     <button type="submit" class="btn">Añadir</button>
                 </form>
             </div>
@@ -117,7 +118,7 @@
                 </c:if>
             </table>
 
-            <form action="/ProyectosJPS/CerrarSesionServlet" method="post">
+            <form action="/ProyectosJPS/CerrarSesionServlet" method="post" id="Cerrar">
                 <button type="submit" class="btn">Cerrar Sesión</button>
             </form>
         </div>

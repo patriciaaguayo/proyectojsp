@@ -73,27 +73,25 @@
 
     <div class="container">
         <h1>Tareas del Proyecto: ${nombreProyecto}</h1>
-        <p><strong>Descripción:</strong> ${descripcionProyecto}</p>
+        <p class="InfoProyecto"><strong>Descripción:</strong> ${descripcionProyecto}</p>
         <p><strong>Estado:</strong> ${estadoProyecto}</p>
         
         <!-- Depuración: Mostrar ID del Proyecto y cantidad de tareas -->
-        <p>ID Proyecto: <%= idProyecto %></p>
-        <p>Cantidad de tareas encontradas: ${tareas.size()}</p>
+        <p><strong>ID Proyecto:</strong> <%= idProyecto %></p>
+        <p><strong>Cantidad de tareas encontradas:</strong> ${tareas.size()}</p>
         
         <div class="section" onclick="toggleSection('addSection')">Añadir ▼</div>
             <div class="section-content" id="addSection">
                 <form action="/ProyectosJPS/TareaServlet" method="POST">
                     <div>
                         <label for="descripcionTarea">Descripción:</label>
-                        <input type="text" id="descripcionTarea" name="descripcionTarea" required>
-                    </div>
-                    <div>
+                        <input class="Campo" type="text" id="descripcionTarea" name="descripcionTarea" required>
+                   
                         <label for="responsable">Responsable:</label>
-                        <input type="text" id="responsable" name="responsable" required>
-                    </div>
-                    <div>
+                        <input class="Campo" type="text" id="responsable" name="responsable" required>
+                    
                         <label for="fechaFinTarea">Fecha de Fin:</label>
-                        <input type="date" id="fechaFinTarea" name="fechaFinTarea" required>
+                        <input class="Campo" type="date" id="fechaFinTarea" name="fechaFinTarea" required>
                     </div>
                     <input type="hidden" name="idProyecto" value="<%= idProyecto %>">
                     <button type="submit" class="btn">Añadir Tarea</button>
@@ -129,16 +127,6 @@
 
         <!-- Tabla de tareas -->
         <table border="1">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Descripción</th>
-                    <th>Responsable</th>
-                    <th>Estado</th>
-                    <th>Fecha Inicio</th>
-                    <th>Fecha Fin</th>
-                </tr>
-            </thead>
             <tbody>
                 <c:if test="${not empty tareas}">
                     <c:forEach var="tarea" items="${tareas}">
@@ -159,7 +147,7 @@
         </table>
 
         <!-- Volver a la página anterior -->
-        <a href="/ProyectosJPS/JSP/Proyectos.jsp">Volver a Proyectos</a>
+        <a href="/ProyectosJPS/JSP/Proyectos.jsp" class="Volver">Volver a Proyectos</a>
 
     </div>
 
