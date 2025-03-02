@@ -57,14 +57,7 @@ public class CerrarSesionServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Obtener la sesión y cerrarla
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate(); // Cierra la sesión
-        }
-        
-        // Redirigir al usuario de vuelta a la página de login
-        response.sendRedirect("/ProyectosJPS/JSP/LoginRegistro.jsp");
+        cerrarSesion(request, response);
     }
 
     /**
@@ -76,9 +69,16 @@ public class CerrarSesionServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        cerrarSesion(request, response);
+    }
+    
+    private void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // Cierra la sesión
+        }
+        response.sendRedirect(request.getContextPath() + "/JSP/LoginRegistro.jsp"); // Redirige al login
     }
 
     /**

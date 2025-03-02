@@ -24,4 +24,6 @@ public interface TareaService {
     void eliminarTarea(int idTarea);
     
     Proyectos obtenerProyectoPorId(int idProyecto);
+    
+    Tareas obtenerTareaPorId(int idTarea);
 }

@@ -94,26 +94,40 @@ public class TareaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String accion = request.getParameter("accion");
-        
+
         if ("eliminar".equals(accion)) {
             eliminarTarea(request, response);
         } else {
             agregarTarea(request, response);  // Aquí se maneja el caso de agregar tarea
         }
     }
-    
+
     private void eliminarTarea(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             // Obtener el id de la tarea que se quiere eliminar
             int idTarea = Integer.parseInt(request.getParameter("idTarea"));
             int idProyecto = Integer.parseInt(request.getParameter("idProyecto"));
 
+            // Verificar que el idTarea sea positivo
+            if (idTarea <= 0) {
+                request.setAttribute("mensaje", "Error: El ID de tarea debe ser un número positivo.");
+                request.getRequestDispatcher("/JSP/Tareas.jsp?id=" + idProyecto).forward(request, response);
+                return;
+            }
+
+            // Verificar que la tarea existe en la base de datos
+            Tareas tareaExistente = tareaService.obtenerTareaPorId(idTarea);
+            if (tareaExistente == null) {
+                request.setAttribute("mensaje", "Error: No existe una tarea con ese ID.");
+                request.getRequestDispatcher("/JSP/Tareas.jsp?id=" + idProyecto).forward(request, response);
+                return;
+            }
+
             // Llamamos al servicio para eliminar la tarea
             tareaService.eliminarTarea(idTarea);
 
             // Establecer un mensaje de éxito
             request.setAttribute("mensaje", "Tarea eliminada correctamente.");
-
         } catch (NumberFormatException e) {
             // En caso de error con el número del id
             request.setAttribute("mensaje", "Error: ID de tarea inválido.");
@@ -124,17 +138,30 @@ public class TareaServlet extends HttpServlet {
         request.getRequestDispatcher("/JSP/Tareas.jsp?id=" + request.getParameter("idProyecto")).forward(request, response);
     }
 
-    // Método para agregar tarea
     private void agregarTarea(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String descripcionTarea = request.getParameter("descripcionTarea");
         String responsable = request.getParameter("responsable");
         String fechaFinTareaStr = request.getParameter("fechaFinTarea");
         int idProyecto = Integer.parseInt(request.getParameter("idProyecto"));
+        LocalDate inicio = LocalDate.now();
+
+        // Verificar que responsable solo contiene letras
+        if (!responsable.matches("[a-zA-Z\\s]+")) {
+            request.setAttribute("mensaje", "Error: El nombre del responsable debe contener solo letras.");
+            request.getRequestDispatcher("/JSP/Tareas.jsp?id=" + idProyecto).forward(request, response);
+            return;  // Salir si el responsable no es válido
+        }
 
         // Convertir la fecha de fin de tarea a LocalDate
         LocalDate fechaFinTarea = null;
         if (fechaFinTareaStr != null && !fechaFinTareaStr.isEmpty()) {
             fechaFinTarea = LocalDate.parse(fechaFinTareaStr);
+        }
+        
+        if (fechaFinTarea != null && !fechaFinTarea.isAfter(inicio)) {
+            request.setAttribute("errorMessage", "La fecha de finalización debe ser posterior a la fecha de inicio.");
+            request.getRequestDispatcher("/JSP/Tareas.jsp").forward(request, response);
+            return;
         }
 
         // Obtener el proyecto asociado al ID
@@ -152,7 +179,7 @@ public class TareaServlet extends HttpServlet {
             request.setAttribute("mensaje", "Tarea añadida correctamente.");
         } else {
             // En caso de que no se encuentre el proyecto
-            request.setAttribute("mensaje", "Proyecto no encontrado.");
+            request.setAttribute("mensaje", "Error: Proyecto no encontrado.");
         }
 
         // Redirigir al JSP de tareas con el ID del proyecto

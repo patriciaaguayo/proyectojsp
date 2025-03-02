@@ -27,9 +27,17 @@
 
         <!-- Script para mostrar el mensaje emergente -->
         <script>
-            <% String mensaje = (String) request.getAttribute("mensaje"); %>
+            <% 
+                String mensaje = (String) request.getAttribute("mensaje");
+                String errorMessage = (String) request.getAttribute("errorMessage");
+            %>
+                
             <% if (mensaje != null) { %>
                 alert("<%= mensaje %>");
+            <% } %>
+
+            <% if (errorMessage != null) { %>
+                alert("<%= errorMessage %>");
             <% } %>
             
             function toggleSection(id) {
@@ -100,7 +108,7 @@
                                     System.out.println("Tipo de Usuario: " + tipoUsuario);
                                 %>
                                 
-                                <a href="/ProyectosJPS/JSP/Tareas.jsp?id=${proyecto.idProyecto}&nombre=${proyecto.nombreProyecto}&descripcion=${proyecto.descripcionProyecto}&estado=${proyecto.estadoProyecto}" style="color: white;">
+                                <a class="NProyecto" href="/ProyectosJPS/JSP/Tareas.jsp?id=${proyecto.idProyecto}&nombre=${proyecto.nombreProyecto}&descripcion=${proyecto.descripcionProyecto}&estado=${proyecto.estadoProyecto}" style="color: white;">
                                     ${proyecto.nombreProyecto}
                                 </a>
 
@@ -118,7 +126,7 @@
                 </c:if>
             </table>
 
-            <form action="/ProyectosJPS/CerrarSesionServlet" method="post" id="Cerrar">
+            <form action="${pageContext.request.contextPath}/CerrarSesionServlet" method="post" id="Cerrar">
                 <button type="submit" class="btn">Cerrar Sesión</button>
             </form>
         </div>

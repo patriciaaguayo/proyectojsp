@@ -18,4 +18,5 @@ public interface ITareasDAO {
     void agregarTarea(Tareas tarea);
     void eliminarTarea(int idTarea);
     Proyectos obtenerProyectoPorId(int idProyecto);
+    Tareas obtenerTareaPorId(int idTarea);
 }

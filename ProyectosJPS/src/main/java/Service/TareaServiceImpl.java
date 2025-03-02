@@ -57,4 +57,9 @@ public class TareaServiceImpl implements TareaService {
     public Proyectos obtenerProyectoPorId(int idProyecto){
         return tareasDAO.obtenerProyectoPorId(idProyecto);
     }
+    
+    @Override
+    public Tareas obtenerTareaPorId(int idTarea){
+        return tareasDAO.obtenerTareaPorId(idTarea);
+    }
 }

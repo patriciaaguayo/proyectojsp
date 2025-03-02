@@ -68,6 +68,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tareas del Proyecto</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/ProyectosStyle.css">
+    
+    <!-- Script para mostrar el mensaje emergente -->
+        <script>
+            <% 
+                String mensaje = (String) request.getAttribute("mensaje");
+                String errorMessage = (String) request.getAttribute("errorMessage");
+            %>
+                
+            <% if (mensaje != null) { %>
+                alert("<%= mensaje %>");
+            <% } %>
+
+            <% if (errorMessage != null) { %>
+                alert("<%= errorMessage %>");
+            <% } %>
+         
+        </script>
+    
 </head>
 <body>
 

@@ -7,6 +7,8 @@ package Servlets;
 import DAO.IProyectosDAO;
 import DAO.ProyectosDAOImpl;
 import Service.ProyectoServiceImpl;
+import Service.TareaService;
+import Service.TareaServiceImpl;
 import Util.HibernateUtil;
 import entities.Proyectos;
 import java.io.IOException;
@@ -28,11 +30,12 @@ import org.hibernate.SessionFactory;
 public class ProyectoServlet extends HttpServlet {
     
     private ProyectoServiceImpl proyectoService;
+    private SessionFactory sessionFactory;
 
     @Override
     public void init() throws ServletException {
         // Inicializar ProyectoService
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        sessionFactory = HibernateUtil.getSessionFactory();
         ProyectosDAOImpl proyectoDAO = new ProyectosDAOImpl(sessionFactory);
         proyectoService = new ProyectoServiceImpl(proyectoDAO);
     }
@@ -108,11 +111,6 @@ public class ProyectoServlet extends HttpServlet {
         String idProyecto = request.getParameter("idProyecto");
         LocalDate inicio = LocalDate.now();
 
-        System.out.println("nombreProyecto: " + nombreProyecto);
-        System.out.println("descripcionProyecto: " + descripcionProyecto);
-        System.out.println("fechaFin: " + fechaFin);
-        System.out.println("idProyecto: " + idProyecto);
-
         // Convertir fechaFin a LocalDate
         LocalDate fechaFinProyecto = null;
         if (fechaFin != null && !fechaFin.isEmpty()) {
@@ -123,7 +121,7 @@ public class ProyectoServlet extends HttpServlet {
         if (fechaFinProyecto != null && !fechaFinProyecto.isAfter(inicio)) {
             // Si la fecha de finalización no es posterior, redirigir con un mensaje de error
             request.setAttribute("errorMessage", "La fecha de finalización debe ser posterior a la fecha de inicio.");
-            request.getRequestDispatcher("/ProyectosJPS/Proyectos.jsp").forward(request, response);
+            request.getRequestDispatcher("/JSP/Proyectos.jsp").forward(request, response);
             return; // Salir para no continuar con el proceso de inserción
         }
 
@@ -137,23 +135,44 @@ public class ProyectoServlet extends HttpServlet {
             nuevoProyecto.setFechaFinProyecto(fechaFinProyecto);
 
             proyectoService.insertarProyecto(nuevoProyecto);
+
             request.setAttribute("mensaje", "Proyecto añadido correctamente.");
             request.getRequestDispatcher("/JSP/Proyectos.jsp").forward(request, response);
         }
 
-        // Si se está eliminando un proyecto
-        if (idProyecto != null && !idProyecto.isEmpty()) {
-            Integer id = Integer.parseInt(idProyecto);
-            proyectoService.eliminarProyectoPorId(id);
-            request.setAttribute("mensaje", "Proyecto eliminado correctamente.");
-            request.getRequestDispatcher("/JSP/Proyectos.jsp").forward(request, response);
+       if (idProyecto != null && !idProyecto.isEmpty()) {
+            try {
+                // Intentar convertir el idProyecto a un entero
+                Integer id = Integer.parseInt(idProyecto);
+                TareaService tarea = new TareaServiceImpl(this.sessionFactory);
+
+                // Verificar que el id sea positivo
+                if (id <= 0) {
+                    request.setAttribute("errorMessage", "El ID del proyecto debe ser un número positivo.");
+                    request.getRequestDispatcher("/JSP/Proyectos.jsp").forward(request, response);
+                    return;  // Salir si el id no es válido
+                }
+
+                // Verificar si el proyecto con ese id existe
+                Proyectos proyectoExistente = tarea.obtenerProyectoPorId(id);
+                if (proyectoExistente == null) {
+                    request.setAttribute("errorMessage", "No existe un proyecto con ese ID.");
+                    request.getRequestDispatcher("/JSP/Proyectos.jsp").forward(request, response);
+                    return;  // Salir si el proyecto no existe
+                }
+
+                // Si el proyecto existe, proceder a eliminarlo
+                proyectoService.eliminarProyectoPorId(id);
+                request.setAttribute("mensaje", "Proyecto eliminado correctamente.");
+                request.getRequestDispatcher("/JSP/Proyectos.jsp").forward(request, response);
+
+            } catch (NumberFormatException e) {
+                // Si el idProyecto no es un número válido
+                request.setAttribute("errorMessage", "El ID del proyecto debe ser un número válido.");
+                request.getRequestDispatcher("/JSP/Proyectos.jsp").forward(request, response);
+            }
         }
-
-        // Redirigir después de la acción
-        response.sendRedirect("ProyectoServlet");
     }
-
-
 
     /**
      * Returns a short description of the servlet.

@@ -92,5 +92,15 @@ public class TareasDAOImpl implements ITareasDAO {
             return null;
         }
     }
+    
+    @Override
+    public Tareas obtenerTareaPorId(int idTarea) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Tareas.class, idTarea); // Busca la tarea por su ID
+        } catch (Exception e) {
+            System.err.println("Error al obtener la tarea: " + e.getMessage());
+            return null;
+        }
+    }
 }
 

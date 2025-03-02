@@ -38,6 +38,31 @@ p {
     color: white;
 }
 
+/* Responsividad */
+@media (max-width: 768px) {
+    /* Hace que la tabla se pueda desplazar horizontalmente */
+    .table-container {
+        overflow-x: auto;
+    }
+
+    /* Reduce el tamaño de fuente en pantallas pequeñas */
+    table {
+        font-size: 0.6rem;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+    
+    .NProyecto{
+       font-size: 0.6rem; 
+    }
+}
+
+.NProyecto{
+    margin-bottom: 10px;
+}
+
 /* Tabla */
 table {
     width: 100%;
