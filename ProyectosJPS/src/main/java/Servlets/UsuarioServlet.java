@@ -90,7 +90,8 @@ public class UsuarioServlet extends HttpServlet {
                     session.setAttribute("Usuario", usuario.getNombreUsuario());
                     session.setAttribute("Tipo_Usuario", usuario.getTipoUsuario()); // Admin o User
 
-                    // Redirigir a la página de proyectos
+                    // Redirigir a la página de proyectos con un mensaje de éxito
+                    session.setAttribute("successMessage", "Sesión iniciada correctamente.");
                     response.sendRedirect("JSP/Proyectos.jsp");
                 } else {
                     request.setAttribute("errorMessage", "Contraseña incorrecta.");
@@ -118,6 +119,8 @@ public class UsuarioServlet extends HttpServlet {
                     session.setAttribute("Usuario", username);
                     session.setAttribute("Tipo_Usuario", tipoUsuario);
 
+                    // Mensaje de éxito para el registro
+                    session.setAttribute("successMessage", "Cuenta creada correctamente.");
                     response.sendRedirect("JSP/Proyectos.jsp");
                 } else {
                     request.setAttribute("errorMessage", "La contraseña no puede estar vacía.");
@@ -126,6 +129,7 @@ public class UsuarioServlet extends HttpServlet {
             }
         }
     }
+
 
 
     /**

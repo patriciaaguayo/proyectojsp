@@ -39,7 +39,7 @@
             <% if (errorMessage != null) { %>
                 alert("<%= errorMessage %>");
             <% } %>
-            
+                            
             function toggleSection(id) {
                 var section = document.getElementById(id);
                 section.style.display = (section.style.display === 'block') ? 'none' : 'block';
