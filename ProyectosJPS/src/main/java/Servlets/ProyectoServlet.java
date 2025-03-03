@@ -105,6 +105,10 @@ public class ProyectoServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         String nombreProyecto = request.getParameter("nombreProyecto");
         String descripcionProyecto = request.getParameter("descripcionProyecto");
         String fechaFin = request.getParameter("fechaFin");
@@ -140,7 +144,7 @@ public class ProyectoServlet extends HttpServlet {
             request.getRequestDispatcher("/JSP/Proyectos.jsp").forward(request, response);
         }
 
-       if (idProyecto != null && !idProyecto.isEmpty()) {
+        if (idProyecto != null && !idProyecto.isEmpty()) {
             try {
                 // Intentar convertir el idProyecto a un entero
                 Integer id = Integer.parseInt(idProyecto);
@@ -173,6 +177,8 @@ public class ProyectoServlet extends HttpServlet {
             }
         }
     }
+
+
 
     /**
      * Returns a short description of the servlet.

@@ -139,17 +139,20 @@ public class TareaServlet extends HttpServlet {
     }
 
     private void agregarTarea(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         String descripcionTarea = request.getParameter("descripcionTarea");
         String responsable = request.getParameter("responsable");
         String fechaFinTareaStr = request.getParameter("fechaFinTarea");
         int idProyecto = Integer.parseInt(request.getParameter("idProyecto"));
         LocalDate inicio = LocalDate.now();
 
-        // Verificar que responsable solo contiene letras
-        if (!responsable.matches("[a-zA-Z\\s]+")) {
-            request.setAttribute("mensaje", "Error: El nombre del responsable debe contener solo letras.");
+        if (!responsable.matches("(?u)[\\p{L}\\s]+")) {
+            request.setAttribute("mensaje", "Error: El nombre del responsable debe contener solo letras y espacios.");
             request.getRequestDispatcher("/JSP/Tareas.jsp?id=" + idProyecto).forward(request, response);
-            return;  // Salir si el responsable no es válido
+            return;
         }
 
         // Convertir la fecha de fin de tarea a LocalDate
@@ -157,7 +160,7 @@ public class TareaServlet extends HttpServlet {
         if (fechaFinTareaStr != null && !fechaFinTareaStr.isEmpty()) {
             fechaFinTarea = LocalDate.parse(fechaFinTareaStr);
         }
-        
+
         if (fechaFinTarea != null && !fechaFinTarea.isAfter(inicio)) {
             request.setAttribute("errorMessage", "La fecha de finalización debe ser posterior a la fecha de inicio.");
             request.getRequestDispatcher("/JSP/Tareas.jsp").forward(request, response);
@@ -185,6 +188,7 @@ public class TareaServlet extends HttpServlet {
         // Redirigir al JSP de tareas con el ID del proyecto
         request.getRequestDispatcher("/JSP/Tareas.jsp?id=" + idProyecto).forward(request, response);
     }
+
 
 
     /**
